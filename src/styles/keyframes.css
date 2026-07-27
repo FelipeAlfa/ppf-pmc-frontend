@@ -1,0 +1,179 @@
+:root {
+  --hamburger-button-animation-duration: 400ms;
+  --hamburger-button-line-width: 1.2rem;
+  --hamburger-button-line-size: 2px;
+  --hamburger-button-line-offset: 6px;
+  --loading-bar-animation-duration: 1.2s;
+  --loading-bar-line-width: 20%;
+  --loading-bar-line-width-expanded: 55%;
+  --loading-bar-line-middle-right: 30%;
+  --loading-bar-line-start-right: 100%;
+  --loading-bar-line-end-right: -20%;
+}
+
+@theme {
+  --animate-hamburger-button-shape-1: hamburgerButtonShape1 var(--hamburger-button-animation-duration) linear 1;
+  --animate-hamburger-button-shape-2: hamburgerButtonShape2 var(--hamburger-button-animation-duration) linear 1;
+  --animate-hamburger-button-shape-3: hamburgerButtonShape3 var(--hamburger-button-animation-duration) linear 1;
+  --animate-hamburger-button-shape-1-active: hamburgerButtonShape1Active var(--hamburger-button-animation-duration) linear 1;
+  --animate-hamburger-button-shape-2-active: hamburgerButtonShape2Active var(--hamburger-button-animation-duration) linear 1;
+  --animate-hamburger-button-shape-3-active: hamburgerButtonShape3Active var(--hamburger-button-animation-duration) linear 1;
+  --animate-loading-bar-left-to-right: loadingBarMoveLeftToRight var(--loading-bar-animation-duration) ease-in-out infinite;
+  --animate-loading-bar-right-to-left: loadingBarMoveRightToLeft var(--loading-bar-animation-duration) ease-in-out infinite;
+}
+
+@keyframes hamburgerButtonShape1 {
+  0% {
+    margin-top: 0px;
+    transform: translateY(-50%) translateX(-50%) rotate(-45deg);
+    width: var(--hamburger-button-line-width);
+  }
+  25% {
+    margin-top: 0px;
+    transform: translateY(-50%) translateX(-50%) rotate(-45deg);
+    width: var(--hamburger-button-line-size);
+  }
+  50% {
+    margin-top: 0px;
+    transform: translateY(-50%) translateX(-50%) rotate(0deg);
+    width: var(--hamburger-button-line-size);
+  }
+  75% {
+    margin-top: 0px;
+    transform: translateY(-50%) translateX(-50%) rotate(0deg);
+    width: var(--hamburger-button-line-width);
+  }
+}
+
+@keyframes hamburgerButtonShape2 {
+  0% {
+    height: var(--hamburger-button-line-size);
+    width: var(--hamburger-button-line-size);
+  }
+  50% {
+    height: var(--hamburger-button-line-size);
+    width: var(--hamburger-button-line-size);
+  }
+  75% {
+    height: var(--hamburger-button-line-size);
+    width: var(--hamburger-button-line-width);
+  }
+}
+
+@keyframes hamburgerButtonShape3 {
+  0% {
+    margin-top: 0px;
+    transform: translateY(-50%) translateX(-50%) rotate(45deg);
+    width: var(--hamburger-button-line-width);
+  }
+  25% {
+    margin-top: 0px;
+    transform: translateY(-50%) translateX(-50%) rotate(45deg);
+    width: var(--hamburger-button-line-size);
+  }
+  50% {
+    margin-top: 0px;
+    transform: translateY(-50%) translateX(-50%) rotate(0deg);
+    width: var(--hamburger-button-line-size);
+  }
+  75% {
+    margin-top: 0px;
+    transform: translateY(-50%) translateX(-50%) rotate(0deg);
+    width: var(--hamburger-button-line-width);
+  }
+}
+
+@keyframes hamburgerButtonShape1Active {
+  0% {
+    transform: translateY(-50%) translateX(-50%);
+    margin-top: calc(var(--hamburger-button-line-offset) * -1);
+    width: var(--hamburger-button-line-width);
+  }
+  25% {
+    transform: translateY(-50%) translateX(-50%);
+    margin-top: 0px;
+    width: var(--hamburger-button-line-width);
+  }
+  50% {
+    transform: translateY(-50%) translateX(-50%);
+    margin-top: 0px;
+    width: var(--hamburger-button-line-size);
+  }
+  75% {
+    transform: translateY(-50%) translateX(-50%) rotate(-45deg);
+    margin-top: 0px;
+    width: var(--hamburger-button-line-size);
+  }
+}
+
+@keyframes hamburgerButtonShape2Active {
+  0% {
+    width: var(--hamburger-button-line-width);
+    height: var(--hamburger-button-line-size);
+  }
+  50% {
+    width: var(--hamburger-button-line-width);
+    height: var(--hamburger-button-line-size);
+  }
+  75% {
+    width: var(--hamburger-button-line-size);
+    height: var(--hamburger-button-line-size);
+  }
+}
+
+@keyframes hamburgerButtonShape3Active {
+  0% {
+    transform: translateY(-50%) translateX(-50%);
+    margin-top: var(--hamburger-button-line-offset);
+    width: var(--hamburger-button-line-width);
+  }
+  25% {
+    transform: translateY(-50%) translateX(-50%);
+    margin-top: 0px;
+    width: var(--hamburger-button-line-width);
+  }
+  50% {
+    transform: translateY(-50%) translateX(-50%);
+    margin-top: 0px;
+    width: var(--hamburger-button-line-size);
+  }
+  75% {
+    transform: translateY(-50%) translateX(-50%) rotate(45deg);
+    margin-top: 0px;
+    width: var(--hamburger-button-line-size);
+  }
+}
+
+@keyframes loadingBarMoveRightToLeft {
+  0% {
+    right: var(--loading-bar-line-end-right);
+    width: var(--loading-bar-line-width);
+  }
+
+  50% {
+    right: var(--loading-bar-line-middle-right);
+    width: var(--loading-bar-line-width-expanded);
+  }
+
+  100% {
+    right: var(--loading-bar-line-start-right);
+    width: var(--loading-bar-line-width);
+  }
+}
+
+@keyframes loadingBarMoveLeftToRight {
+  0% {
+    right: var(--loading-bar-line-start-right);
+    width: var(--loading-bar-line-width);
+  }
+
+  50% {
+    right: var(--loading-bar-line-middle-right);
+    width: var(--loading-bar-line-width-expanded);
+  }
+
+  100% {
+    right: var(--loading-bar-line-end-right);
+    width: var(--loading-bar-line-width);
+  }
+}

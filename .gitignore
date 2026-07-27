@@ -20,6 +20,9 @@
 # production
 /build
 
+# legacy content for agent
+/legacy
+
 # misc
 .DS_Store
 *.pem
