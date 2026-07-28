@@ -42,14 +42,13 @@ export default function SearchBar() {
 
   const onSubmitEvent = (event: React.SubmitEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log('submit', {searchValue});
   };
 
   return (
-    <div className="overflow-visible bg-(--search-bar-color,#EEEEEE) p-4 sm:px-8">
+    <div className="overflow-visible bg-(--search-bar-color,#EEEEEE) py-4">
       <Container>
-        <form className="flex flex-col gap-4 sm:flex-row sm:flex-wrap md:flex-nowrap" onSubmit={onSubmitEvent}>
-          <div className="grow">
+        <form className="flex flex-row flex-wrap gap-2" onSubmit={onSubmitEvent}>
+          <div className="w-full md:w-auto md:grow">
             <Autocomplete
               label="Search by name, event, location or photographer"
               value={searchValue}
@@ -57,7 +56,7 @@ export default function SearchBar() {
               options={optionsPromise}
               onSelect={(selectedOption) => setSearchValue(selectedOption.label)} />
           </div>
-          <div>
+          <div className="grow md:grow-0">
             <ComboBox
               value={searchType}
               onChange={setSearchType}
@@ -66,7 +65,7 @@ export default function SearchBar() {
                 {label: "Events", value: "events"},
               ]}/>
           </div>
-          <div className="w-full md:w-auto">
+          <div className="">
             <Button variant="primary" type="submit" className="block w-full">
               Search
             </Button>

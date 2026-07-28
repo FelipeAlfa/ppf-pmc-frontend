@@ -1,23 +1,51 @@
 
 import Container from "@/components/Container/Container";
+import ContentWithSidebar from "@/components/ContentWithSidebar/ContentWithSidebar";
 import EventItem from "@/components/EventItem/EventItem";
+import FilterList from "@/components/FilterList/FilterList";
 import GridView from "@/components/GridView/GridView";
-import { eventsDummyData } from "@/dev/dummyData";
+import SearchBar from "@/components/SearchBar/SearchBar";
+import Sticky from "@/components/Sticky/Sticky";
+import { eventsDummyData, filterGroupsDummyData } from "@/dev/dummyData";
 
 export default function EventsPage() {
   return (
-    <Container verticalSpacing>
-      <GridView
-        items={eventsDummyData}
-        renderItem={(eventData) => (
-          <EventItem
-            date={eventData.date}
-            name={eventData.name}
-            location={eventData.location}
-            imageCount={eventData.imageCount}
-            thumbnailUrl={eventData.thumbnailUrl}
-            eventLink={eventData.link} />
-        )} />
-    </Container>
+    <>
+      <Sticky name="searchBar" stack="globalHeader">
+        <SearchBar />
+      </Sticky>
+      <Container verticalSpacing>
+        <ContentWithSidebar
+          title="Search events"
+          sidebar={<FilterList groups={filterGroupsDummyData} />}>
+          <section>
+            <div className="mb-6 flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
+              <div>
+                <h1 className="text-2xl font-bold uppercase tracking-wider">
+                  Search Results
+                </h1>
+                <p className="mt-1 text-sm">
+                  {eventsDummyData.length} Events
+                </p>
+              </div>
+              <p className="text-xs uppercase tracking-wider text-brand-blue">
+                Dummy filters for layout validation
+              </p>
+            </div>
+            <GridView
+              items={eventsDummyData}
+              renderItem={(eventData) => (
+                <EventItem
+                  date={eventData.date}
+                  name={eventData.name}
+                  location={eventData.location}
+                  imageCount={eventData.imageCount}
+                  thumbnailUrl={eventData.thumbnailUrl}
+                  eventLink={eventData.link} />
+              )} />
+          </section>
+        </ContentWithSidebar>
+      </Container>
+    </>
   );
 }

@@ -12,7 +12,7 @@ export const autocompleteVariants = cva(
 );
 
 export const labelVariants = cva(
-  "pointer-events-none absolute inset-0 flex h-full w-full items-center px-4 text-sm font-semibold tracking-wider text-foreground transition-all duration-150 ease-linear font-liberation-sans",
+  "pointer-events-none absolute inset-0 flex h-full w-full items-center px-4 text-sm font-semibold tracking-wider text-foreground transition-all duration-150 ease-linear font-liberation-sans truncate",
   {
     variants: {
       hidden: {

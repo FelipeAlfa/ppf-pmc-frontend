@@ -7,6 +7,7 @@ import { classNames } from "@/utils";
 import Region from "@/components/Region/Region";
 import { RegionsProvider } from "@/context/RegionContext";
 import BaseLayout from "@/components/BaseLayout/BaseLayout";
+import Sticky from "@/components/Sticky/Sticky";
 import "@/styles/globals.css";
 
 export const metadata: Metadata = {
@@ -38,9 +39,11 @@ export default function RootLayout({
           <body>
             <BaseLayout
               top={
-                <Region name="globalHeader">
-                  <GlobalHeader />
-                </Region>
+                <Sticky name="globalHeader" hide>
+                  <Region name="globalHeader">
+                    <GlobalHeader />
+                  </Region>
+                </Sticky>
               }
               middle={
                 <Region name="main">

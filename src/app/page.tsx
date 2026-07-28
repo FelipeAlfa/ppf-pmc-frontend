@@ -3,13 +3,16 @@ import EventItem from "@/components/EventItem/EventItem";
 import GridView from "@/components/GridView/GridView";
 import SearchBar from "@/components/SearchBar/SearchBar";
 import Slideshow from "@/components/Slideshow/Slideshow";
+import Sticky from "@/components/Sticky/Sticky";
 import { eventsDummyData, slideshowDummyData } from "@/dev/dummyData";
 
 export default function Home() {
   return (
     <div>
       <Slideshow slides={slideshowDummyData} />
-      <SearchBar />
+      <Sticky name="searchBar" stack="globalHeader">
+        <SearchBar />
+      </Sticky>
       <Container verticalSpacing>
         <GridView
           items={eventsDummyData}
