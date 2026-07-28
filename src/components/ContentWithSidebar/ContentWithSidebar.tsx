@@ -4,8 +4,10 @@ import { useEffect, useRef, useState } from "react";
 import {
   contentWithSidebarAsideVariants,
   contentWithSidebarContentVariants,
+  contentWithSidebarPanelVariants,
   contentWithSidebarTitleVariants,
 } from "./ContentWithSidebar.variants";
+import useMediaQuery from "@/hooks/useMediaQuery";
 
 interface ContentWithSidebarProps {
   title: string;
@@ -21,6 +23,7 @@ export default function ContentWithSidebar({
   const sidebarRef = useRef<HTMLElement>(null);
   const sidebarPanelRef = useRef<HTMLDivElement>(null);
   const [collapsed, setCollapsed] = useState(false);
+  const sm = useMediaQuery("sm");
 
   useEffect(() => {
     const root = document.documentElement;
@@ -29,6 +32,17 @@ export default function ContentWithSidebar({
     let animationFrameId = 0;
 
     if (!sidebar || !sidebarPanel) return;
+
+    const resetFixedSidebarLayout = () => {
+      root.style.removeProperty("--layout-footer-visible-height");
+      sidebarPanel.style.removeProperty("--sidebar-fixed-left");
+    };
+
+    if (!sm) {
+      resetFixedSidebarLayout();
+      sidebarPanel.dataset.sidebarReady = "true";
+      return;
+    }
 
     const updateFixedSidebarLayout = () => {
       const footerElement = document.querySelector("footer");
@@ -58,25 +72,26 @@ export default function ContentWithSidebar({
       window.cancelAnimationFrame(animationFrameId);
       window.removeEventListener("scroll", scheduleFixedSidebarLayoutUpdate);
       window.removeEventListener("resize", scheduleFixedSidebarLayoutUpdate);
-      root.style.removeProperty("--layout-footer-visible-height");
-      sidebarPanel.style.removeProperty("--sidebar-fixed-left");
+      resetFixedSidebarLayout();
       delete sidebarPanel.dataset.sidebarReady;
     };
 
-  }, []);
+  }, [sm]);
+
+  const panelStyle = sm ? {
+    height: "calc(100dvh - var(--layout-offset-global-header, 0px) - var(--layout-offset-search-bar, 0px) - var(--layout-footer-visible-height, 0px))",
+    left: "var(--sidebar-fixed-left, 0px)",
+    top: "calc(var(--layout-offset-global-header, 0px) + var(--layout-offset-search-bar, 0px))",
+  } : undefined;
 
   return (
-    <div className="flex flex-nowrap gap-6 lg:gap-8">
+    <div className="flex flex-col gap-6 sm:flex-row sm:flex-nowrap lg:gap-8">
       <aside ref={sidebarRef} className={contentWithSidebarAsideVariants({ collapsed })} aria-label={title}>
         <div
           ref={sidebarPanelRef}
-          data-sidebar-ready="false"
-          className="fixed z-90 overflow-auto overscroll-contain py-8 opacity-0 transition-[top,opacity] duration-200 ease-linear data-[sidebar-ready=true]:opacity-100 w-64 px-4 -mx-4"
-          style={{
-            height: "calc(100dvh - var(--layout-offset-global-header, 0px) - var(--layout-offset-search-bar, 0px) - var(--layout-footer-visible-height, 0px))",
-            left: "var(--sidebar-fixed-left, 0px)",
-            top: "calc(var(--layout-offset-global-header, 0px) + var(--layout-offset-search-bar, 0px))",
-          }}>
+          data-sidebar-ready={sm ? "false" : "true"}
+          className={contentWithSidebarPanelVariants({ fixed: sm })}
+          style={panelStyle}>
           <div className="flex items-center gap-3">
             <button
               className="inline-flex h-9 w-9 shrink-0 cursor-pointer items-center justify-center rounded-sm bg-brand-darkgray text-sm transition-colors duration-100 ease-linear hover:border-brand-blue hover:text-brand-blue"
