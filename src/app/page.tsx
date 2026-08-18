@@ -5,24 +5,32 @@ import GridView from "@/components/GridView/GridView";
 import SearchBar from "@/components/SearchBar/SearchBar";
 import Slideshow from "@/components/Slideshow/Slideshow";
 import Sticky from "@/components/Sticky/Sticky";
-import { eventsDummyData, slideshowDummyData } from "@/dev/dummyData";
 import { Metadata } from "next";
+import {
+  dummyGetSlideshow,
+  dummyGetEventResults,
+} from "@/lib/dummy/dummyRequests";
 
 export const metadata: Metadata = {
   title: "Patrick McMullan",
   description: "Patrick McMullan Website",
 };
 
-export default function Home() {
+export default async function Home() {
+  const [slideshow, eventResults] = await Promise.all([
+    dummyGetSlideshow(),
+    dummyGetEventResults({ limit: 12 }),
+  ]);
+
   return (
     <div>
-      <Slideshow slides={slideshowDummyData} />
+      <Slideshow slides={slideshow} />
       <Sticky name="searchBar" stack="globalHeader">
         <SearchBar />
       </Sticky>
       <Container verticalSpacing>
         <GridView
-          items={eventsDummyData}
+          items={eventResults.events}
           renderItem={(eventData) => (
             <EventItem
               date={eventData.date}

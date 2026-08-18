@@ -7,7 +7,7 @@ import {
   eventsDummyData,
   filterGroupsDummyData,
   photosDummyData,
-} from "@/dev/dummyData";
+} from "@/lib/dummy/dummyData";
 
 interface EventDetailPageProps {
   params: Promise<{

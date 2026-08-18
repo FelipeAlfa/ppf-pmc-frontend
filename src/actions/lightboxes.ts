@@ -6,7 +6,7 @@ import {
   deleteLightbox,
   updateLightbox,
 } from "@/lib/pmc-api/lightboxes";
-import type { PmcRequestParams } from "@/lib/pmc-api/types";
+import type { PmcRequestParams } from "@/lib/pmc-api/common/types";
 
 export async function createLightboxAction(input: PmcRequestParams) {
   const response = await createLightbox(input);

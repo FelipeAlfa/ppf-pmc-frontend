@@ -3,8 +3,8 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { getCurrentUser, login } from "@/lib/pmc-api/auth";
-import { pmcCookieNames, PmcApiError } from "@/lib/pmc-api/client";
-import type { LoginInput } from "@/lib/pmc-api/types";
+import { pmcCookieNames, PmcApiError } from "@/lib/pmc-api/common/client";
+import type { LoginInput } from "@/lib/pmc-api/common/types";
 
 const ONE_WEEK_SECONDS = 60 * 60 * 24 * 7;
 

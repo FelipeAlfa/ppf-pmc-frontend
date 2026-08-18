@@ -1,5 +1,5 @@
-import { pmcRequest } from "./client";
-import type { EventSearchParams, PmcLegacyResponse, PmcRequestParams } from "./types";
+import { pmcRequest } from "./common/client";
+import type { EventSearchParams, PmcLegacyResponse, PmcRequestParams } from "./common/types";
 
 export type EventsResponse = PmcLegacyResponse<{
   events?: unknown[];

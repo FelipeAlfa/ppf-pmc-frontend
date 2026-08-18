@@ -1,7 +1,7 @@
 import Container from "@/components/Container/Container";
 import GridView from "@/components/GridView/GridView";
 import PageHero from "@/components/PageHero/PageHero";
-import { archiveDummyData } from "@/dev/dummyData";
+import { archiveDummyData } from "@/lib/dummy/dummyData";
 import Image from "next/image";
 
 export default function ArchivePage() {

@@ -7,15 +7,21 @@ import GridView from "@/components/GridView/GridView";
 import Pagination from "@/components/Pagination/Pagination";
 import SearchBar from "@/components/SearchBar/SearchBar";
 import Sticky from "@/components/Sticky/Sticky";
-import { eventsDummyData, filterGroupsDummyData } from "@/dev/dummyData";
 import { Metadata } from "next";
+import {
+  dummyGetEventResults,
+} from "@/lib/dummy/dummyRequests";
 
 export const metadata: Metadata = {
   title: "Search events",
   description: "Patrick McMullan Website",
 };
 
-export default function EventsPage() {
+export default async function EventsPage() {
+  const [eventResults] = await Promise.all([
+    dummyGetEventResults({ limit: 64 }),
+  ]);
+
   return (
     <>
       <Sticky name="searchBar" stack="globalHeader">
@@ -24,7 +30,7 @@ export default function EventsPage() {
       <Container verticalSpacing>
         <ContentWithSidebar
           title="Search events"
-          sidebar={<FilterList groups={filterGroupsDummyData} />}>
+          sidebar={<FilterList groups={[]} />}>
           <section>
             <div className="mb-6 flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
               <div>
@@ -32,7 +38,7 @@ export default function EventsPage() {
                   Search Results
                 </h1>
                 <p className="mt-1 text-sm">
-                  {eventsDummyData.length} Events
+                  {eventResults.events.length} Events
                 </p>
               </div>
               <p className="text-xs uppercase tracking-wider text-brand-blue">
@@ -40,7 +46,7 @@ export default function EventsPage() {
               </p>
             </div>
             <GridView
-              items={eventsDummyData}
+              items={eventResults.events}
               renderItem={(eventData) => (
                 <EventItem
                   date={eventData.date}

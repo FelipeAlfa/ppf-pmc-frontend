@@ -3,32 +3,23 @@
 import { useEffect, useState } from 'react';
 import Button from '../Button/Button';
 import Autocomplete from '../Autocomplete/Autocomplete';
-import { createFetchMock } from '@/utils.dev';
 import ComboBox from '../ComboBox/ComboBox';
 import Container from '../Container/Container';
-
-const fetchOptions = createFetchMock(1000, [
-  {label: "Linkin park", group: "Men band", data: ""},
-  {label: "Limp Bizkit", group: "Men band", data: ""},
-  {label: "Slipknot", group: "Men band", data: ""},
-  {label: "Evanescence", group: "Women band", data: ""},
-  {label: "System of a Down", group: "Men band", data: ""},
-  {label: "Rammstein", group: "Men band", data: ""},
-  {label: "Avril Lavigne", group: "Women band", data: ""},
-  {label: "Nirvana", data: ""},
-]);
+import {
+  dummyGetAutocompleteResults,
+} from '@/lib/dummy/dummyRequests';
 
 export default function SearchBar() {
   const [searchValue, setSearchValue] = useState("");
   const [searchType, setSearchType] = useState("photos");
   const [optionsPromise, setOptionsPromise] = useState<
-    ReturnType<typeof fetchOptions> | null
+    ReturnType<typeof dummyGetAutocompleteResults> | null
   >();
 
   useEffect(() => {
     const timeoutId = window.setTimeout(() => {
       if (searchValue.length >= 2) {
-        setOptionsPromise(fetchOptions(searchValue));
+        setOptionsPromise(dummyGetAutocompleteResults());
       }
       else {
         setOptionsPromise(null);

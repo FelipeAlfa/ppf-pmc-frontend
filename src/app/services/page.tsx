@@ -1,7 +1,7 @@
 import Container from "@/components/Container/Container";
 import GridView from "@/components/GridView/GridView";
 import PageHero from "@/components/PageHero/PageHero";
-import { servicesDummyData } from "@/dev/dummyData";
+import { servicesDummyData } from "@/lib/dummy/dummyData";
 import Image from "next/image";
 import Link from "next/link";
 

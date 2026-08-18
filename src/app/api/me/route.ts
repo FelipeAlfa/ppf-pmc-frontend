@@ -1,5 +1,5 @@
 import { getCurrentUser } from "@/lib/pmc-api/auth";
-import { pmcErrorResponse, pmcJsonResponse } from "@/lib/pmc-api/route";
+import { pmcErrorResponse, pmcJsonResponse } from "@/lib/pmc-api/common/route";
 
 export async function GET() {
   try {

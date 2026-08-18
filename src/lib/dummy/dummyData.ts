@@ -1,24 +1,20 @@
-import { EventResult } from "@/types";
 import { createDummyListData } from "./dummyDataUtils";
 
-export const dummyEventResultList = createDummyListData<EventResult>(
-    (index) => ({
-        name: `Event Name ${index + 1}`,
-        location: `Event Location ${index + 1}`,
-        date: (new Date()).getTime(),
-        imageCount: 10,
-        thumbnailUrl: index % 2 === 0 ? "https://picsum.photos/800/600" : "https://picsum.photos/600/800",
-        link: `/events/${index + 1}`
-    })
-);
+export const dummySlideList = createDummyListData((index) => ({
+    title: `Slide ${index + 1}`,
+    subTitle: `Subtitle ${index + 1}`,
+    imageSrc: index % 2 === 0 ? "https://picsum.photos/1600/1200" : "https://picsum.photos/1920/1080",
+    link: "/events"
+}));
 
-
-
-
-
-
-
-
+export const dummyEventResultList = createDummyListData((index) => ({
+    name: `Event Name ${index + 1}`,
+    location: `Event Location ${index + 1}`,
+    date: (new Date()).getTime(),
+    imageCount: 10,
+    thumbnailUrl: index % 2 === 0 ? "https://picsum.photos/800/600" : "https://picsum.photos/600/800",
+    link: `/events/${index + 1}`
+}));
 
 export const slideshowDummyData = Array.from({ length: 25 }, (_, i) => ({
     title: `Slide ${i + 1}`,

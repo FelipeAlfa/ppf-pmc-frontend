@@ -1,7 +1,7 @@
 import Container from "@/components/Container/Container";
 import GridView from "@/components/GridView/GridView";
 import PageHero from "@/components/PageHero/PageHero";
-import { publishingDummyData } from "@/dev/dummyData";
+import { publishingDummyData } from "@/lib/dummy/dummyData";
 import Image from "next/image";
 
 export default function PublishingPage() {

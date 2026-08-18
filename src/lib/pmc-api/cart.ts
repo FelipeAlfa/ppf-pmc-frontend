@@ -1,5 +1,5 @@
-import { pmcRequest } from "./client";
-import type { CartItemInput, PmcLegacyResponse, PmcRequestParams } from "./types";
+import { pmcRequest } from "./common/client";
+import type { CartItemInput, PmcLegacyResponse, PmcRequestParams } from "./common/types";
 
 export type CartResponse = PmcLegacyResponse<{
   shopping_cart?: unknown;

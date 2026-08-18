@@ -1,5 +1,5 @@
-import { pmcRequest } from "./client";
-import type { LoginInput, PmcLegacyResponse } from "./types";
+import { pmcRequest } from "./common/client";
+import type { LoginInput, PmcLegacyResponse } from "./common/types";
 
 export type LoginResponse = PmcLegacyResponse<{
   token?: {

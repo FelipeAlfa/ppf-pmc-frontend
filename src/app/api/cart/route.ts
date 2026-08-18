@@ -1,6 +1,6 @@
 import type { NextRequest } from "next/server";
 import { getCart } from "@/lib/pmc-api/cart";
-import { pmcErrorResponse, pmcJsonResponse } from "@/lib/pmc-api/route";
+import { pmcErrorResponse, pmcJsonResponse } from "@/lib/pmc-api/common/route";
 
 export async function GET(request: NextRequest) {
   try {

@@ -6,7 +6,7 @@ import {
   removeCartItem,
   updateCartItem,
 } from "@/lib/pmc-api/cart";
-import type { CartItemInput, PmcRequestParams } from "@/lib/pmc-api/types";
+import type { CartItemInput, PmcRequestParams } from "@/lib/pmc-api/common/types";
 
 export async function addCartItemAction(input: CartItemInput) {
   const response = await addCartItem(input);

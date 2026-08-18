@@ -1,5 +1,5 @@
-import { pmcRequest } from "./client";
-import type { PmcLegacyResponse, PmcRequestParams } from "./types";
+import { pmcRequest } from "./common/client";
+import type { PmcLegacyResponse, PmcRequestParams } from "./common/types";
 
 export type LightboxesResponse = PmcLegacyResponse<{
   lightboxes?: unknown[];
