@@ -8,6 +8,12 @@ import Pagination from "@/components/Pagination/Pagination";
 import SearchBar from "@/components/SearchBar/SearchBar";
 import Sticky from "@/components/Sticky/Sticky";
 import { eventsDummyData, filterGroupsDummyData } from "@/dev/dummyData";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Search events",
+  description: "Patrick McMullan Website",
+};
 
 export default function EventsPage() {
   return (
