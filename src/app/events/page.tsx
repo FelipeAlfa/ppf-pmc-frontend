@@ -4,6 +4,7 @@ import ContentWithSidebar from "@/components/ContentWithSidebar/ContentWithSideb
 import EventItem from "@/components/EventItem/EventItem";
 import FilterList from "@/components/FilterList/FilterList";
 import GridView from "@/components/GridView/GridView";
+import Pagination from "@/components/Pagination/Pagination";
 import SearchBar from "@/components/SearchBar/SearchBar";
 import Sticky from "@/components/Sticky/Sticky";
 import { eventsDummyData, filterGroupsDummyData } from "@/dev/dummyData";
@@ -43,6 +44,7 @@ export default function EventsPage() {
                   thumbnailUrl={eventData.thumbnailUrl}
                   eventLink={eventData.link} />
               )} />
+            <Pagination />
           </section>
         </ContentWithSidebar>
       </Container>
