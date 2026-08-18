@@ -16,6 +16,24 @@ export const dummyEventResultList = createDummyListData((index) => ({
     link: `/events/${index + 1}`
 }));
 
+export const dummyAutocompleteResultList = createDummyListData((index, origin) => ({
+    label: `${origin.name} ${index + 1}`,
+    group: origin.group,
+    data: {
+        id: `ac-${index + 1}`,
+    }
+}), [
+    {name: "Person", group: "People"},
+    {name: "Event", group: "Events"},
+    {name: "Location", group: "Locations"},
+    {name: "Photographer", group: "Photographers"}
+]);
+
+
+// old
+
+
+
 export const slideshowDummyData = Array.from({ length: 25 }, (_, i) => ({
     title: `Slide ${i + 1}`,
     subTitle: `Subtitle ${i + 1}`,

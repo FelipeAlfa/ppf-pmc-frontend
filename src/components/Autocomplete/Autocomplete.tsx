@@ -20,6 +20,7 @@ type AutocompleteOption<D> = {
 interface AutocompleteProps<D> {
   value: string;
   label?: string;
+  disabled?: boolean;
   options?: AutocompleteOption<D>[] | Promise<AutocompleteOption<D>[]> | null;
   renderOption?(option: AutocompleteOption<D>, index: number): React.ReactNode;
   onChange?(value: string): void;
@@ -29,6 +30,7 @@ interface AutocompleteProps<D> {
 export default function Autocomplete<D>({
   value,
   label,
+  disabled = false,
   options,
   renderOption,
   onChange,
@@ -216,10 +218,11 @@ export default function Autocomplete<D>({
       });
     }
     else if (e.key === 'Enter' && highlightedOptionIsValid) {
-      e.preventDefault();
       const selectedOption = getOptionByIndex(highlightedIndex);
 
       if (selectedOption) {
+        e.preventDefault();
+        e.stopPropagation();
         selectOption(selectedOption);
       }
     }
@@ -248,7 +251,7 @@ export default function Autocomplete<D>({
         ) }
         <input
           id={inputId}
-          className="h-10 w-full rounded-xs border-0 bg-white px-4 text-left text-sm tracking-wider text-foreground outline-none font-liberation-sans"
+          className="h-10 w-full rounded-xs border-0 bg-white px-4 text-left text-sm tracking-wider text-foreground outline-none font-liberation-sans disabled:cursor-not-allowed disabled:bg-foreground/5 disabled:text-foreground/50"
           type="text"
           value={value}
           role="combobox"
@@ -261,6 +264,7 @@ export default function Autocomplete<D>({
           onKeyDown={onKeyDownEvent}
           onFocus={onFocusEvent}
           onChange={onChangeEvent}
+          disabled={disabled}
         />
       </div>
       { dropdownIsOpen && isLoading && (

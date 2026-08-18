@@ -25,7 +25,7 @@ export default async function EventsPage() {
   return (
     <>
       <Sticky name="searchBar" stack="globalHeader">
-        <SearchBar />
+        <SearchBar initialSearchType="events" />
       </Sticky>
       <Container verticalSpacing>
         <ContentWithSidebar

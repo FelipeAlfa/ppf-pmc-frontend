@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState, useTransition } from 'react';
 import Button from '../Button/Button';
 import Autocomplete from '../Autocomplete/Autocomplete';
 import ComboBox from '../ComboBox/ComboBox';
@@ -8,10 +8,28 @@ import Container from '../Container/Container';
 import {
   dummyGetAutocompleteResults,
 } from '@/lib/dummy/dummyRequests';
+import { useRouter } from "next/navigation";
 
-export default function SearchBar() {
+type SearchType = "photos" | "events";
+
+interface SearchBarProps {
+  initialSearchType?: SearchType;
+}
+
+const searchTypeOptions: {label: string, value: SearchType}[] = [
+  {label: "Photos", value: "photos"},
+  {label: "Events", value: "events"},
+];
+
+const isSearchType = (value: string): value is SearchType => (
+  searchTypeOptions.some((option) => option.value === value)
+);
+
+export default function SearchBar({ initialSearchType = "photos" }: SearchBarProps) {
+  const router = useRouter();
+  const [isPending, startTransition] = useTransition();
   const [searchValue, setSearchValue] = useState("");
-  const [searchType, setSearchType] = useState("photos");
+  const [searchType, setSearchType] = useState(initialSearchType);
   const [optionsPromise, setOptionsPromise] = useState<
     ReturnType<typeof dummyGetAutocompleteResults> | null
   >();
@@ -31,33 +49,66 @@ export default function SearchBar() {
     };
   }, [searchValue]);
 
-  const onSubmitEvent = (event: React.SubmitEvent<HTMLFormElement>) => {
-    event.preventDefault();
-  };
+  const doSearch = useCallback((params: Record<string, string>) => {
+    if (isPending) return;
+
+    const url = searchType === "photos" ? "/photos" : "/events"
+    startTransition(() => {
+      router.push(`${url}?${new URLSearchParams(params).toString()}`);
+    });
+  }, [isPending, router, searchType, startTransition]);
 
   return (
     <div className="overflow-visible bg-(--search-bar-color,#EEEEEE) py-4">
       <Container>
-        <form className="flex flex-row flex-wrap gap-2" onSubmit={onSubmitEvent}>
+        <form
+          className="flex flex-row flex-wrap gap-2"
+          aria-busy={isPending}
+          onSubmit={(event) => {
+            event.preventDefault();
+            doSearch({q: searchValue});
+          }}>
           <div className="w-full md:w-auto md:grow">
             <Autocomplete
               label="Search by name, event, location or photographer"
               value={searchValue}
+              disabled={isPending}
               onChange={setSearchValue}
               options={optionsPromise}
-              onSelect={(selectedOption) => setSearchValue(selectedOption.label)} />
+              onSelect={(selectedOption) => {
+                setSearchValue("");
+                switch (selectedOption.group) {
+                  case "People":
+                    doSearch({person: selectedOption.data.id});
+                    break;
+                  case "Events":
+                    doSearch({event: selectedOption.data.id});
+                    break;
+                  case "Locations":
+                    doSearch({location: selectedOption.data.id});
+                    break;
+                  case "Photographers":
+                    doSearch({photographer: selectedOption.data.id});
+                    break;
+                }
+              }} />
           </div>
           <div className="grow md:grow-0">
             <ComboBox
               value={searchType}
-              onChange={setSearchType}
-              options={[
-                {label: "Photos", value: "photos"},
-                {label: "Events", value: "events"},
-              ]}/>
+              onChange={(value) => {
+                if (isSearchType(value)) {
+                  setSearchType(value);
+                }
+              }}
+              options={searchTypeOptions}/>
           </div>
           <div className="">
-            <Button variant="primary" type="submit" className="block w-full">
+            <Button
+              variant="primary"
+              type="submit"
+              className="block w-full"
+              disabled={isPending}>
               Search
             </Button>
           </div>
