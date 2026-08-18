@@ -1,3 +1,4 @@
+import Button from "@/components/Button/Button";
 import Container from "@/components/Container/Container";
 import EventItem from "@/components/EventItem/EventItem";
 import GridView from "@/components/GridView/GridView";
@@ -5,6 +6,12 @@ import SearchBar from "@/components/SearchBar/SearchBar";
 import Slideshow from "@/components/Slideshow/Slideshow";
 import Sticky from "@/components/Sticky/Sticky";
 import { eventsDummyData, slideshowDummyData } from "@/dev/dummyData";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Patrick McMullan",
+  description: "Patrick McMullan Website",
+};
 
 export default function Home() {
   return (
@@ -26,6 +33,11 @@ export default function Home() {
               thumbnailCover
               eventLink={eventData.link} />
           )} />
+        <div className="flex justify-center mt-16">
+          <Button variant="primary" behavior="link" href="/events">
+            View all
+          </Button>
+        </div>
       </Container>
     </div>
   );
