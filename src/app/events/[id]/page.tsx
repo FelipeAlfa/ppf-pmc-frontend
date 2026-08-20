@@ -1,11 +1,9 @@
-import Container from "@/components/Container/Container";
-import ContentWithSidebar from "@/components/ContentWithSidebar/ContentWithSidebar";
-import FilterList from "@/components/FilterList/FilterList";
-import PhotoGrid from "@/components/PhotoGrid/PhotoGrid";
-import SearchBar from "@/components/SearchBar/SearchBar";
+import Container from "@/components/layout/Container/Container";
+import ContentWithSidebar from "@/components/layout/ContentWithSidebar/ContentWithSidebar";
+import PhotoGrid from "@/components/domains/photos/PhotoGrid/PhotoGrid";
+import SearchBar from "@/components/partials/SearchBar/SearchBar";
 import {
   eventsDummyData,
-  filterGroupsDummyData,
   photosDummyData,
 } from "@/lib/dummy/dummyData";
 
@@ -25,7 +23,7 @@ export default async function EventDetailPage({ params }: EventDetailPageProps) 
       <Container verticalSpacing>
         <ContentWithSidebar
           title="Filter photos"
-          sidebar={<FilterList groups={filterGroupsDummyData} />}>
+          sidebar={"sidebar"}>
           <section>
             <header className="mb-8 border-b border-[#eeeeee] pb-6">
               <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">

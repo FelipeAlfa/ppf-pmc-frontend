@@ -1,14 +1,13 @@
-import Button from "@/components/Button/Button";
-import Container from "@/components/Container/Container";
-import EventItem from "@/components/EventItem/EventItem";
-import GridView from "@/components/GridView/GridView";
-import SearchBar from "@/components/SearchBar/SearchBar";
-import Slideshow from "@/components/Slideshow/Slideshow";
-import Sticky from "@/components/Sticky/Sticky";
+import Button from "@/components/ui/Button/Button";
+import Container from "@/components/layout/Container/Container";
+import EventResults from "@/components/domains/events/EventResults";
+import SearchBar from "@/components/partials/SearchBar/SearchBar";
+import Slideshow from "@/components/partials/Slideshow/Slideshow";
+import Sticky from "@/components/layout/Sticky/Sticky";
 import { Metadata } from "next";
 import {
-  dummyGetSlideshow,
   dummyGetEventResults,
+  dummyGetSlideshow,
 } from "@/lib/dummy/dummyRequests";
 
 export const metadata: Metadata = {
@@ -29,18 +28,10 @@ export default async function Home() {
         <SearchBar />
       </Sticky>
       <Container verticalSpacing>
-        <GridView
-          items={eventResults.events}
-          renderItem={(eventData) => (
-            <EventItem
-              date={eventData.date}
-              name={eventData.name}
-              location={eventData.location}
-              imageCount={eventData.imageCount}
-              thumbnailUrl={eventData.thumbnailUrl}
-              thumbnailCover
-              eventLink={eventData.link} />
-          )} />
+        <EventResults
+          eventResults={eventResults}
+          showPagination={false}
+          thumbnailCover />
         <div className="flex justify-center mt-16">
           <Button variant="primary" behavior="link" href="/events">
             View all

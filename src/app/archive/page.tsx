@@ -1,6 +1,6 @@
-import Container from "@/components/Container/Container";
-import GridView from "@/components/GridView/GridView";
-import PageHero from "@/components/PageHero/PageHero";
+import Container from "@/components/layout/Container/Container";
+import GridView from "@/components/layout/GridView/GridView";
+import PageHero from "@/components/layout/PageHero/PageHero";
 import { archiveDummyData } from "@/lib/dummy/dummyData";
 import Image from "next/image";
 

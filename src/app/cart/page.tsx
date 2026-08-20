@@ -1,4 +1,4 @@
-import Container from "@/components/Container/Container";
+import Container from "@/components/layout/Container/Container";
 
 export default function CartPage() {
   return (

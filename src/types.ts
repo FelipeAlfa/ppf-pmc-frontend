@@ -1,8 +1,8 @@
 export interface EventResults {
   events: EventResult[];
-  total: number;
-  page: number;
-  limit: number;
+  totalPages: number;
+  totalRecords: number;
+  currentPage: number;
 };
 
 export interface EventResult {
