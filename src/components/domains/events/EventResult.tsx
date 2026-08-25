@@ -22,7 +22,7 @@ export default function EventResult({
   thumbnailCover = false
 }: EventResultProps) {
   return (
-    <div className="relative block md:p-4 md:rounded-sm md:transition-all md:duration-100 md:border md:border-transparent md:hover:border-foreground/15 md:hover:bg-foreground/2 md:hover:shadow-sm">
+    <div className="relative block">
       <Link href={eventLink}>
         <Thumbnail src={thumbnailUrl} alt={name} cover={thumbnailCover} />
       </Link>
