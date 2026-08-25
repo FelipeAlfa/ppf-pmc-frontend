@@ -51,8 +51,7 @@ export default function SearchBar({ initialSearchType = "photos" }: SearchBarPro
 
   const doSearch = useCallback((params: Record<string, string>) => {
     if (isPending) return;
-
-    const url = searchType === "photos" ? "/photos" : "/events"
+    const url = searchType === "photos" ? "/photos" : "/events";
     startTransition(() => {
       router.push(`${url}?${new URLSearchParams(params).toString()}`);
     });

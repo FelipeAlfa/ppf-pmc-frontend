@@ -100,7 +100,7 @@ export default function Calendar({
   };
 
   return (
-    <div className={`flex w-full max-w-100 flex-col gap-2 rounded-sm border border-foreground/15 bg-white shadow-md ${className}`.trim()}>
+    <div className={`flex w-full flex-col gap-2 rounded-sm border border-foreground/15 bg-white shadow-md ${className}`.trim()}>
       <div className="border-b border-foreground/15 p-2">
         <div className="grid grid-cols-[2rem_1fr_2rem] items-center gap-1">
           <button

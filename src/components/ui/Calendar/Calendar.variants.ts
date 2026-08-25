@@ -1,7 +1,7 @@
 import { cva } from "class-variance-authority";
 
 export const calendarPickerVariants = cva(
-  "h-8 w-full rounded text-xs",
+  "h-7 w-full rounded text-xs",
   {
     variants: {
       state: {

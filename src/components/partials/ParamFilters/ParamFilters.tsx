@@ -4,7 +4,18 @@ import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useParamFilters } from "@/context/ParamFiltersContext";
 
-export default function ParamFilters() {
+interface ParamFiltersProps {
+  details?: {
+    events: {id: string, name: string}[];
+    people: {id: string, name: string}[];
+    locations: {id: string, name: string}[];
+    photographers: {id: string, name: string}[];
+  };
+}
+
+export default function ParamFilters({
+  details
+}: ParamFiltersProps) {
   const {
     filters,
     isPending,

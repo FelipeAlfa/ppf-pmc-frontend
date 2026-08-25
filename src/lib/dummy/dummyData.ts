@@ -7,6 +7,15 @@ export const dummySlideList = createDummyListData((index) => ({
     link: "/events"
 }));
 
+export const dummyPhotoResultList = createDummyListData((index) => ({
+    code: index + 1000000,
+    eventName: `Event Name ${index + 1}`,
+    locationName: `Event Location ${index + 1}`,
+    date: (new Date()).getTime(),
+    thumbnailUrl: index % 2 === 0 ? "https://picsum.photos/800/600" : "https://picsum.photos/600/800",
+    link: `/photos/${index + 1000000}`
+}));
+
 export const dummyEventResultList = createDummyListData((index) => ({
     name: `Event Name ${index + 1}`,
     location: `Event Location ${index + 1}`,

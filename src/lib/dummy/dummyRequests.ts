@@ -1,17 +1,31 @@
-import { EventResults } from "@/types";
+import { EventResults, PhotoResults } from "@/types";
 import { createDummyRequest } from "./dummyDataUtils";
 import {
   dummyAutocompleteResultList,
   dummyEventResultList,
+  dummyPhotoResultList,
   dummySlideList
 } from "./dummyData";
 
-interface DummyGetEventResultsParams extends Record<string, unknown> {
+interface DummyGetParams extends Record<string, unknown> {
   limit: number;
   p?: number;
 }
 
-export const dummyGetEventResults = createDummyRequest<EventResults, DummyGetEventResultsParams>(
+export const dummyGetPhotoResults = createDummyRequest<PhotoResults, DummyGetParams>(
+  ({
+    p = 1
+  }) => {
+    return {
+      photos: dummyPhotoResultList(12),
+      totalPages: 19 + p,
+      totalRecords: 125,
+      currentPage: p
+    }
+  }
+);
+
+export const dummyGetEventResults = createDummyRequest<EventResults, DummyGetParams>(
   (params) => {
     const limit = Math.max(1, params.limit);
     const totalRecords = 100;

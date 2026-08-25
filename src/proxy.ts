@@ -5,9 +5,12 @@ const allowedSearchParamsByPathname: Record<string, Set<string>> = {
     "date",
     "p",
     "q",
+    "event",
+    "location",
+    "person",
+    "photographer",
   ]),
   "/photos": new Set([
-    "date",
     "p",
     "q",
     "event",

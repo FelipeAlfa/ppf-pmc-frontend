@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import {
   contentWithSidebarAsideVariants,
   contentWithSidebarContentVariants,
+  contentWithSidebarPanelInnerVariants,
   contentWithSidebarPanelVariants,
   contentWithSidebarTitleVariants,
 } from "./ContentWithSidebar.variants";
@@ -94,21 +95,23 @@ export default function ContentWithSidebar({
           data-sidebar-ready={sm ? "false" : "true"}
           className={contentWithSidebarPanelVariants({ fixed: sm })}
           style={panelStyle}>
-          <div className="flex items-center gap-3">
-            <button
-              className="inline-flex h-9 w-9 shrink-0 cursor-pointer items-center justify-center rounded-sm bg-brand-darkgray text-sm transition-colors duration-100 ease-linear hover:border-brand-blue hover:text-brand-blue"
-              type="button"
-              aria-expanded={!collapsed}
-              aria-label={collapsed ? `Expand ${title}` : `Collapse ${title}`}
-              onClick={() => setCollapsed((value) => !value)}>
-              <FontAwesomeIcon icon={collapsed ? faPlus : faMinus} className="text-white" />
-            </button>
-            <h2 className={contentWithSidebarTitleVariants({ collapsed })}>
-              {title}
-            </h2>
-          </div>
-          <div className={contentWithSidebarContentVariants({ collapsed })}>
-            {sidebar}
+          <div className={contentWithSidebarPanelInnerVariants({ fixed: sm })}>
+            <div className="flex items-center gap-3">
+              <button
+                className="inline-flex h-9 w-9 shrink-0 cursor-pointer items-center justify-center rounded-sm bg-brand-darkgray text-sm transition-colors duration-100 ease-linear hover:border-brand-blue hover:text-brand-blue"
+                type="button"
+                aria-expanded={!collapsed}
+                aria-label={collapsed ? `Expand ${title}` : `Collapse ${title}`}
+                onClick={() => setCollapsed((value) => !value)}>
+                <FontAwesomeIcon icon={collapsed ? faPlus : faMinus} className="text-white" />
+              </button>
+              <h2 className={contentWithSidebarTitleVariants({ collapsed })}>
+                {title}
+              </h2>
+            </div>
+            <div className={contentWithSidebarContentVariants({ collapsed })}>
+              {sidebar}
+            </div>
           </div>
         </div>
       </aside>

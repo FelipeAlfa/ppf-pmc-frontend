@@ -1,20 +1,24 @@
 "use client";
 
-import Calendar from "@/components/ui/Calendar/Calendar";
 import { useParamFilters } from "@/context/ParamFiltersContext";
 
-export default function EventFilters() {
+interface PhotoFiltersProps {
+  filters: {
+    people: {id: string, name: string}[];
+    events: {id: string, name: string}[];
+    locations: {id: string, name: string}[];
+    photographers: {id: string, name: string}[];
+  };
+}
+
+export default function PhotoFilters({
+  filters
+}: PhotoFiltersProps) {
   const { getParam, setParam, isPending } = useParamFilters();
-  const date = getParam("date");
-  const calendarValue = typeof date === "number" ? date : undefined;
   
   return (
     <div className="relative">
-      <Calendar
-        value={Number.isFinite(calendarValue) ? calendarValue : undefined}
-        onSelect={(datetime) => {
-          setParam("date", datetime);
-        }} />
+      
       {isPending && (
         <div
           className="absolute inset-0 flex items-center justify-center rounded-sm bg-white/70"
