@@ -27,7 +27,13 @@ export default function SearchFilters({
   locations = [],
   photographers = []
 }: SearchFiltersProps) {
-  const { getParam, setParam, isPending } = useParamFilters();
+  const {
+    addParamValue,
+    getParam,
+    isPending,
+    removeParamValue,
+    setParam,
+  } = useParamFilters();
   const withAccordion = people.length > 0 || events.length > 0 || locations.length > 0 || photographers.length > 0;
   
   return (
@@ -54,7 +60,9 @@ export default function SearchFilters({
                   <SearchFilterItems
                     filterOptions={people}
                     paramName="person"
-                    onSelect={setParam} />
+                    selectedValues={getParamValues(getParam("person"))}
+                    onAdd={addParamValue}
+                    onRemove={removeParamValue} />
                 ),
                 disabled: people.length === 0
               },
@@ -64,7 +72,9 @@ export default function SearchFilters({
                   <SearchFilterItems
                     filterOptions={events}
                     paramName="event"
-                    onSelect={setParam} />
+                    selectedValues={getParamValues(getParam("event"))}
+                    onAdd={addParamValue}
+                    onRemove={removeParamValue} />
                 ),
                 disabled: events.length === 0
               },
@@ -74,7 +84,9 @@ export default function SearchFilters({
                   <SearchFilterItems
                     filterOptions={locations}
                     paramName="location"
-                    onSelect={setParam} />
+                    selectedValues={getParamValues(getParam("location"))}
+                    onAdd={addParamValue}
+                    onRemove={removeParamValue} />
                 ),
                 disabled: locations.length === 0
               },
@@ -84,7 +96,9 @@ export default function SearchFilters({
                   <SearchFilterItems
                     filterOptions={photographers}
                     paramName="photographer"
-                    onSelect={setParam} />
+                    selectedValues={getParamValues(getParam("photographer"))}
+                    onAdd={addParamValue}
+                    onRemove={removeParamValue} />
                 ),
                 disabled: photographers.length === 0
               },
@@ -106,7 +120,9 @@ export default function SearchFilters({
 interface SearchFilterListProps {
   filterOptions: FilterOption[];
   paramName: string;
-  onSelect: (paramName: string, id: string) => void;
+  selectedValues: string[];
+  onAdd: (paramName: string, id: string) => void;
+  onRemove: (paramName: string, id: string) => void;
 }
 
 const normalizeFilterText = (text: string) => (
@@ -118,10 +134,24 @@ const normalizeFilterText = (text: string) => (
 
 const filterOptionsLimit = 5;
 
+const getParamValues = (value: unknown) => {
+  if (Array.isArray(value)) {
+    return value.map(String);
+  }
+
+  if (value === undefined) {
+    return [];
+  }
+
+  return [String(value)];
+};
+
 function SearchFilterItems({
   filterOptions,
   paramName,
-  onSelect
+  selectedValues,
+  onAdd,
+  onRemove
 }: SearchFilterListProps) {
   const [filterString, setFilterString] = useState("");
   const [expanded, setExpanded] = useState(false);
@@ -149,19 +179,30 @@ function SearchFilterItems({
         onChange={(e) => setFilterString(e.target.value)}
       />
       <ul className="flex flex-col gap-1">
-        {visibleOptions.map((filterOption) => (
-          <li key={filterOption.id}>
-            <button
-              type="button"
-              className="inline text-left cursor-pointer px-1 hover:text-brand-blue"
-              onClick={() => {
-                if (filterString) setFilterString("");
-                onSelect(paramName, filterOption.id);
-              }}>
-              {filterOption.name}
-            </button>
-          </li>
-        ))}
+        {visibleOptions.map((filterOption) => {
+          const selected = selectedValues.includes(filterOption.id);
+
+          return (
+            <li key={filterOption.id}>
+              <button
+                type="button"
+                aria-pressed={selected}
+                className={`inline-flex cursor-pointer items-center gap-1 px-1 text-left hover:text-brand-blue ${selected ? "opacity-25" : ""}`.trim()}
+                onClick={() => {
+                  if (filterString) setFilterString("");
+
+                  if (selected) {
+                    onRemove(paramName, filterOption.id);
+                  }
+                  else {
+                    onAdd(paramName, filterOption.id);
+                  }
+                }}>
+                {filterOption.name}
+              </button>
+            </li>
+          );
+        })}
       </ul>
       {canToggleOptions && (
         <button

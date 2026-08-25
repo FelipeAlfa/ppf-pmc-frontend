@@ -198,6 +198,52 @@ export function useParamFilters() {
     resetParams(nextSearchParams, key);
     pushSearchParams(nextSearchParams);
   }, [getConfig, isPending, pushSearchParams, resetParams, searchParams]);
+  const addParamValue = useCallback((key: string, value: string | number) => {
+    const config = getConfig(key);
+
+    if (isPending || config === undefined || config.value !== "string[]") {
+      return;
+    }
+
+    const nextSearchParams = new URLSearchParams(searchParams.toString());
+    const currentValues = nextSearchParams
+      .getAll(key)
+      .flatMap((rawValue) => asParamValueList(parseParamValue(config, rawValue)))
+      .map(String);
+    const nextValues = uniqueParamValues([
+      ...currentValues,
+      String(value),
+    ]);
+
+    nextSearchParams.set(key, serializeParamValue(config, nextValues));
+    resetParams(nextSearchParams, key);
+    pushSearchParams(nextSearchParams);
+  }, [getConfig, isPending, pushSearchParams, resetParams, searchParams]);
+  const removeParamValue = useCallback((key: string, value: string | number) => {
+    const config = getConfig(key);
+
+    if (isPending || config === undefined || config.value !== "string[]") {
+      return;
+    }
+
+    const nextSearchParams = new URLSearchParams(searchParams.toString());
+    const remainingValues = uniqueParamValues(
+      nextSearchParams
+        .getAll(key)
+        .flatMap((rawValue) => asParamValueList(parseParamValue(config, rawValue)))
+        .map(String)
+        .filter((currentValue) => currentValue !== String(value))
+    );
+
+    nextSearchParams.delete(key);
+
+    if (remainingValues.length > 0) {
+      nextSearchParams.set(key, serializeParamValue(config, remainingValues));
+    }
+
+    resetParams(nextSearchParams);
+    pushSearchParams(nextSearchParams);
+  }, [getConfig, isPending, pushSearchParams, resetParams, searchParams]);
   const removeParam = useCallback((key: string, value?: string) => {
     const config = getConfig(key);
 
@@ -228,10 +274,12 @@ export function useParamFilters() {
   }, [getConfig, isPending, pushSearchParams, resetParams, searchParams]);
 
   return {
+    addParamValue,
     filters,
     getParam,
     isPending,
     removeParam,
+    removeParamValue,
     setParam,
   };
 }
@@ -262,6 +310,10 @@ function formatParamValue(key: string, value: ParamFilterParsedValue) {
 
 function asParamValueList(value: ParamFilterParsedValue) {
   return Array.isArray(value) ? value : [value];
+}
+
+function uniqueParamValues(values: string[]) {
+  return Array.from(new Set(values.filter(Boolean)));
 }
 
 function parseDateParam(value: string) {
