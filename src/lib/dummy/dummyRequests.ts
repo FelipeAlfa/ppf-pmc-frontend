@@ -48,6 +48,15 @@ export const dummyGetEventResults = createDummyRequest<EventResults, DummyGetPar
   }
 );
 
+export const dummyGetEvent = createDummyRequest({
+  id: 'e-1',
+  name: "Event 1",
+  date: "2023-06-01",
+  location: "Location 1",
+  imageCount: 10,
+  thumbnailUrl: "https://via.placeholder.com/150",
+});
+
 export const dummyGetSlideshow = createDummyRequest(dummySlideList(25));
 
 export const dummyGetAutocompleteResults = createDummyRequest(dummyAutocompleteResultList(10));

@@ -18,6 +18,8 @@ import GridView from "@/components/layout/GridView/GridView";
 import PhotoGridItem from "@/components/domains/photos/PhotoGridItem";
 import EditorialView from "@/components/layout/EditorialView/EditorialView";
 import PhotoEditorialItem from "@/components/domains/photos/PhotoEditorialItem";
+import CarouselView from "@/components/layout/CarouselView/CarouselView";
+import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "Search photos",
@@ -105,7 +107,23 @@ export default async function PhotosPage() {
                           )} />
                       </ViewSwitcherView>
                       <ViewSwitcherView name="carousel">
-                        <div>CarouselView</div>
+                        <CarouselView
+                          items={photoResults.photos}
+                          renderItem={(photoData) => (
+                            <PhotoEditorialItem
+                              code={photoData.code}
+                              name={photoData.name}
+                              thumbnailUrl={photoData.thumbnailUrl}
+                              withActions />
+                          )}
+                          renderPreview={(photoData) => (
+                            <Image
+                              src={photoData.thumbnailUrl}
+                              alt={photoData.name}
+                              width={64}
+                              height={64}
+                              className="block h-full w-full object-cover" />
+                          )} />
                       </ViewSwitcherView>
                       {photoResults.photos.length > 0 && (
                         <Pagination

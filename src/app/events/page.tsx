@@ -6,12 +6,13 @@ import ParamFilters from "@/components/partials/ParamFilters/ParamFilters";
 import SearchBar from "@/components/partials/SearchBar/SearchBar";
 import Sticky from "@/components/layout/Sticky/Sticky";
 import { Metadata } from "next";
-import EventResults from "@/components/domains/events/EventResults";
-import EventResultsFallback from "@/components/domains/events/EventResultsFallback";
+import EventSuspenseFallback from "@/components/domains/events/EventSuspenseFallback";
 import ParamFiltersProvider from "@/context/ParamFiltersContext";
 import { dummyGetEventResults } from "@/lib/dummy/dummyRequests";
 import Pagination from "@/components/ui/Pagination/Pagination";
 import SearchFilters from "@/components/partials/SearchFilters/SearchFilters";
+import GridView from "@/components/layout/GridView/GridView";
+import EventItem from "@/components/domains/events/EventItem";
 
 export const metadata: Metadata = {
   title: "Search events",
@@ -49,10 +50,20 @@ export default function EventsPage() {
               </div>
               <Await
                 promise={eventResultsPromise}
-                suspense={<EventResultsFallback />}>
+                suspense={<EventSuspenseFallback />}>
                 {(eventResults) => (
                   <>
-                    <EventResults eventResults={eventResults} />
+                    <GridView
+                      items={eventResults.events}
+                      renderItem={(eventData) => (
+                        <EventItem
+                          date={eventData.date}
+                          name={eventData.name}
+                          location={eventData.location}
+                          imageCount={eventData.imageCount}
+                          thumbnailUrl={eventData.thumbnailUrl}
+                          eventLink={eventData.link} />
+                      )} />
                     {eventResults.events.length > 0 && (
                       <Pagination
                         currentPage={eventResults.currentPage}

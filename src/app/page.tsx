@@ -1,6 +1,5 @@
 import Button from "@/components/ui/Button/Button";
 import Container from "@/components/layout/Container/Container";
-import EventResults from "@/components/domains/events/EventResults";
 import SearchBar from "@/components/partials/SearchBar/SearchBar";
 import Slideshow from "@/components/partials/Slideshow/Slideshow";
 import Sticky from "@/components/layout/Sticky/Sticky";
@@ -9,6 +8,8 @@ import {
   dummyGetEventResults,
   dummyGetSlideshow,
 } from "@/lib/dummy/dummyRequests";
+import GridView from "@/components/layout/GridView/GridView";
+import EventItem from "@/components/domains/events/EventItem";
 
 export const metadata: Metadata = {
   title: "Patrick McMullan",
@@ -28,10 +29,18 @@ export default async function Home() {
         <SearchBar />
       </Sticky>
       <Container verticalSpacing>
-        <EventResults
-          eventResults={eventResults}
-          showPagination={false}
-          thumbnailCover />
+        <GridView
+          items={eventResults.events}
+          renderItem={(eventData) => (
+            <EventItem
+              date={eventData.date}
+              name={eventData.name}
+              location={eventData.location}
+              imageCount={eventData.imageCount}
+              thumbnailUrl={eventData.thumbnailUrl}
+              eventLink={eventData.link}
+              thumbnailCover />
+          )} />
         <div className="flex justify-center mt-16">
           <Button variant="primary" behavior="link" href="/events">
             View all

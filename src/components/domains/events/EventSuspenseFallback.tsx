@@ -1,4 +1,4 @@
-export default function EventResultsFallback() {
+export default function EventSuspenseFallback() {
   return (
     <div aria-label="Loading event results">
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">

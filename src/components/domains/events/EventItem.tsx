@@ -3,7 +3,7 @@ import Thumbnail from "@/components/ui/Thumbnail/Thumbnail";
 import Link from 'next/link';
 import { shortDate } from "@/lib/date";
 
-interface EventResultProps {
+interface EventItemProps {
   date: number;
   name: string;
   location: string;
@@ -13,7 +13,7 @@ interface EventResultProps {
   eventLink: string;
 }
 
-export default function EventResult({
+export default function EventItem({
   date,
   name,
   location,
@@ -21,7 +21,7 @@ export default function EventResult({
   thumbnailUrl,
   eventLink,
   thumbnailCover = false
-}: EventResultProps) {
+}: EventItemProps) {
   const formattedDate = shortDate(date);
 
   return (

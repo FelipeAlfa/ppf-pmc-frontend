@@ -4,7 +4,7 @@ interface PhotoSuspenseFallbackProps {
   viewType: ViewType;
 }
 
-export default function PhotoSuspenseFallback({viewType}: PhotoSuspenseFallbackProps) {
+export default function PhotoSuspenseFallback({ viewType }: PhotoSuspenseFallbackProps) {
   if (viewType === "grid") {
     return (
       <div aria-label="Loading photo results">
@@ -50,6 +50,33 @@ export default function PhotoSuspenseFallback({viewType}: PhotoSuspenseFallbackP
             </li>
           ))}
         </ul>
+      </div>
+    );
+  }
+
+  if (viewType === "carousel") {
+    return (
+      <div aria-label="Loading carousel photo results" className="relative min-w-0 w-full">
+        <div>
+          <ul className="grid w-full grid-cols-3 gap-4">
+            <li>
+              <div className="aspect-square animate-pulse rounded-[5px] bg-foreground/10" />
+            </li>
+            <li>
+              <div className="aspect-square animate-pulse rounded-[5px] bg-foreground/10" />
+            </li>
+            <li>
+              <div className="aspect-square animate-pulse rounded-[5px] bg-foreground/10" />
+            </li>
+          </ul>
+        </div>
+        <div className="mt-4 flex justify-center gap-2 overflow-x-auto pb-1">
+          {Array.from({ length: 8 }, (_, index) => (
+            <div
+              key={index}
+              className="h-12 w-12 shrink-0 animate-pulse rounded-sm bg-foreground/10" />
+          ))}
+        </div>
       </div>
     );
   }
