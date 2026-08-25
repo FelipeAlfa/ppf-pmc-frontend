@@ -89,6 +89,10 @@ export default function ParamFiltersProvider({
     const queryString = nextSearchParams.toString();
     const href = queryString ? `${pathname}?${queryString}` : pathname;
 
+    if (href === `${window.location.pathname}${window.location.search}`) {
+      return;
+    }
+
     startTransition(() => {
       router.push(href);
     });

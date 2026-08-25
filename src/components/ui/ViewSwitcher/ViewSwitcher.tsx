@@ -1,8 +1,12 @@
 "use client";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import type { IconDefinition } from "@fortawesome/fontawesome-svg-core";
 import type { ViewType } from "@/types";
+import {
+  faColumns,
+  faGrip,
+  faPhotoFilm,
+} from "@fortawesome/free-solid-svg-icons";
 import {
   createContext,
   ReactElement,
@@ -16,11 +20,23 @@ import { viewSwitcherButtonVariants } from "./ViewSwitcher.variants";
 
 const viewSwitcherCookieMaxAge = 60 * 60 * 24 * 365;
 
-export interface ViewSwitcherItem {
-  name: ViewType;
-  icon: IconDefinition;
-  label?: string;
-}
+const viewSwitcherViewConfig = {
+  grid: {
+    icon: faGrip,
+    label: "Grid",
+  },
+  editorial: {
+    icon: faColumns,
+    label: "Editorial",
+  },
+  carousel: {
+    icon: faPhotoFilm,
+    label: "Carousel",
+  },
+} satisfies Record<ViewType, {
+  icon: typeof faGrip;
+  label: string;
+}>;
 
 interface ViewSwitcherContextValue {
   activeViewName: ViewType;
@@ -34,7 +50,7 @@ interface ViewSwitcherProviderProps {
 }
 
 interface ViewSwitcherControlsProps {
-  views: ViewSwitcherItem[];
+  views: ViewType[];
 }
 
 interface ViewSwitcherViewProps {
@@ -54,7 +70,7 @@ function useViewSwitcher() {
   return context;
 }
 
-function ViewSwitcherProvider({
+export function ViewSwitcherProvider({
   children,
   initialView = "grid",
   name,
@@ -77,7 +93,7 @@ function ViewSwitcherProvider({
   );
 }
 
-function ViewSwitcherControls({
+export function ViewSwitcherControls({
   views,
 }: ViewSwitcherControlsProps) {
   const {
@@ -90,20 +106,24 @@ function ViewSwitcherControls({
   }
 
   return (
-    <div className="inline-flex overflow-hidden rounded-sm border border-foreground/20">
+    <div className="inline-flex overflow-hidden">
       {views.map((view, index) => {
-        const isActive = view.name === activeViewName;
-        const label = view.label ?? `View ${index + 1}`;
+        const isActive = view === activeViewName;
+        const config = viewSwitcherViewConfig[view];
+        const label = config.label ?? `View ${index + 1}`;
 
         return (
           <button
-            key={view.name}
+            key={view}
             type="button"
             className={viewSwitcherButtonVariants({ active: isActive })}
             aria-label={label}
             aria-pressed={isActive}
-            onClick={() => selectView(view.name)}>
-            <FontAwesomeIcon icon={view.icon} className="h-3.5 w-3.5" />
+            onClick={() => selectView(view)}>
+            <FontAwesomeIcon icon={config.icon} className="h-3.5 w-3.5" />
+            <span className="text-[10px] font-medium leading-none">
+              {label}
+            </span>
           </button>
         );
       })}
@@ -111,7 +131,7 @@ function ViewSwitcherControls({
   );
 }
 
-function ViewSwitcherView({
+export function ViewSwitcherView({
   children,
   name,
 }: ViewSwitcherViewProps) {

@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   description: "Patrick McMullan Website",
 };
 
-export default async function EventsPage() {
+export default function EventsPage() {
   const eventResultsPromise = dummyGetEventResults({
     limit: 12,
   });

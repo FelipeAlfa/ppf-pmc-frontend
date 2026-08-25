@@ -1,12 +1,12 @@
 import { cva } from "class-variance-authority";
 
 export const viewSwitcherButtonVariants = cva(
-  "inline-flex h-9 w-9 cursor-pointer items-center justify-center text-foreground transition-colors duration-150 hover:bg-foreground/10",
+  "inline-flex min-h-11 w-14 cursor-pointer flex-col items-center justify-center gap-1 text-foreground transition-colors duration-150",
   {
     variants: {
       active: {
-        true: "bg-foreground text-background hover:bg-foreground",
-        false: "",
+        true: "opacity-100",
+        false: "opacity-40",
       },
     },
     defaultVariants: {
