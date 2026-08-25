@@ -98,7 +98,7 @@ export default function ContentWithSidebar({
           <div className={contentWithSidebarPanelInnerVariants({ fixed: sm })}>
             <div className="flex items-center gap-3">
               <button
-                className="inline-flex h-9 w-9 shrink-0 cursor-pointer items-center justify-center rounded-sm bg-brand-darkgray text-sm transition-colors duration-100 ease-linear hover:border-brand-blue hover:text-brand-blue"
+                className="inline-flex pointer-events-auto h-9 w-9 shrink-0 cursor-pointer items-center justify-center rounded-sm bg-brand-darkgray text-sm transition-colors duration-100 ease-linear hover:border-brand-blue hover:text-brand-blue"
                 type="button"
                 aria-expanded={!collapsed}
                 aria-label={collapsed ? `Expand ${title}` : `Collapse ${title}`}

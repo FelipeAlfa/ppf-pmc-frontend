@@ -16,14 +16,16 @@ export default function EventResults({
     <GridView
       items={eventResults.events}
       renderItem={(eventData) => (
-        <EventResult
-          date={eventData.date}
-          name={eventData.name}
-          location={eventData.location}
-          imageCount={eventData.imageCount}
-          thumbnailUrl={eventData.thumbnailUrl}
-          thumbnailCover={thumbnailCover}
-          eventLink={eventData.link} />
+        <div className="md:-m-3">
+          <EventResult
+            date={eventData.date}
+            name={eventData.name}
+            location={eventData.location}
+            imageCount={eventData.imageCount}
+            thumbnailUrl={eventData.thumbnailUrl}
+            thumbnailCover={thumbnailCover}
+            eventLink={eventData.link} />
+        </div>
       )} />
   );
 }

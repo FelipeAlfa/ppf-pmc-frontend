@@ -3,8 +3,8 @@ import { cva } from "class-variance-authority";
 export const contentWithSidebarAsideVariants = cva("shrink-0 transition-[width] duration-200 ease-linear", {
   variants: {
     collapsed: {
-      false: "w-full sm:w-72",
-      true: "w-full sm:w-9",
+      false: "w-full sm:w-72 pointer-events-auto",
+      true: "w-full sm:w-9 pointer-events-none",
     },
   },
   defaultVariants: {
