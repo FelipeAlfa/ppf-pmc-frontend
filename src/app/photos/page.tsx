@@ -5,12 +5,15 @@ import SearchBar from "@/components/partials/SearchBar/SearchBar";
 import Sticky from "@/components/layout/Sticky/Sticky";
 import { Metadata } from "next";
 import ParamFiltersProvider from "@/context/ParamFiltersContext";
-import PhotoFilters from "@/components/domains/photos/PhotoFilters";
 import { dummyGetFilters, dummyGetParamFilterDetails, dummyGetPhotoResults } from "@/lib/dummy/dummyRequests";
 import Await from "@/components/core/Await";
 import LoadingBar from "@/components/ui/LoadingBar/LoadingBar";
 import PhotoResults from "@/components/domains/photos/PhotoResults";
+import PhotoResultsFallback from "@/components/domains/photos/PhotoResultsFallback";
 import Pagination from "@/components/ui/Pagination/Pagination";
+import SearchFilters from "@/components/partials/SearchFilters/SearchFilters";
+import { cookies } from "next/headers";
+import { isViewType } from "@/types";
 
 export const metadata: Metadata = {
   title: "Search photos",
@@ -21,6 +24,8 @@ export default async function PhotosPage() {
   const photoResultsPromise = dummyGetPhotoResults();
   const filtersPromise = dummyGetFilters();
   const paramFilterDetailsPromise = dummyGetParamFilterDetails();
+  const photoResultsView = (await cookies()).get("view-switcher-photo-results")?.value;
+  const photoResultsViewType = isViewType(photoResultsView) ? photoResultsView : "grid";
 
   return (
     <>
@@ -33,11 +38,17 @@ export default async function PhotosPage() {
             title="Filter photos"
             sidebar={(
               <Await promise={filtersPromise} suspense={<LoadingBar />}>
-                {(filters) => <PhotoFilters filters={filters} />}
+                {({ events, people, locations, photographers }) => (
+                  <SearchFilters
+                    events={events}
+                    people={people}
+                    locations={locations}
+                    photographers={photographers} />
+                )}
               </Await>
             )}>
             <section>
-              <div className="mb-6 flex flex-col gap-2 md:flex-row md:items-start md:justify-between">
+              <div className="mb-6 flex flex-col gap-4">
                 <div>
                   <h1 className="text-2xl font-bold uppercase tracking-wider">
                     Photos
@@ -56,10 +67,10 @@ export default async function PhotosPage() {
               </div>
               <Await
                 promise={photoResultsPromise}
-                suspense={"loading..."}>
+                suspense={<PhotoResultsFallback />}>
                 {(photoResults) => (
                   <>
-                    <PhotoResults photoResults={photoResults} />
+                    <PhotoResults viewType={photoResultsViewType} photoResults={photoResults} />
                     {photoResults.photos.length > 0 && (
                       <Pagination
                         currentPage={photoResults.currentPage}

@@ -23,29 +23,6 @@ export default async function EventsPage() {
     limit: 12,
   });
 
-  const eventFilters = [
-    {id: "1", name: "Event 1"},
-    {id: "2", name: "Event 2"},
-    {id: "3", name: "Event 3"},
-    {id: "4", name: "Event 4"},
-    {id: "5", name: "Event 5"},
-    {id: "6", name: "Event 6"},
-    {id: "7", name: "Event 7"},
-    {id: "8", name: "Event 8"},
-    {id: "9", name: "Event 9"},
-    {id: "10", name: "Event 10"},
-    {id: "11", name: "Event 11"},
-    {id: "12", name: "Event 12"},
-    {id: "13", name: "Event 13"},
-  ];
-
-  const personFilters = [
-    {id: "1", name: "Person 1"},
-    {id: "2", name: "Person 2"},
-    {id: "3", name: "Person 3"},
-    {id: "4", name: "Person 4"},
-  ];
-
   return (
     <>
       <Sticky name="searchBar" stack="globalHeader">
@@ -55,9 +32,9 @@ export default async function EventsPage() {
         <ParamFiltersProvider>
           <ContentWithSidebar
             title="Filter events"
-            sidebar={<SearchFilters withDate events={eventFilters} people={personFilters} />}>
+            sidebar={<SearchFilters withDate people={[]} locations={[]} photographers={[]} />}>
             <section>
-              <div className="mb-6 flex flex-col gap-2 md:flex-row md:items-start md:justify-between">
+              <div className="mb-6 flex flex-col gap-4">
                 <div>
                   <h1 className="text-2xl font-bold uppercase tracking-wider">
                     Events

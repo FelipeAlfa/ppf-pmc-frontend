@@ -1,19 +1,19 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { getMonthCalendar } from "@/utils";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import { calendarPickerVariants } from "./Calendar.variants";
 import {
   currentYear,
   getDatePickerState,
+  getMonthCalendar,
   getSimplePickerState,
   isSameDate,
   monthLabels,
   type Picker,
   weekDays,
-} from "./Calendar.utils";
+} from "@/lib/calendar";
 
 interface CalendarProps {
   value?: number;

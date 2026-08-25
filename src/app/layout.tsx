@@ -5,7 +5,6 @@ import '@fortawesome/fontawesome-svg-core/styles.css'
 import GlobalHeader from "@/components/partials/GlobalHeader/GlobalHeader";
 import GlobalFooter from "@/components/partials/GlobalFooter/GlobalFooter";
 import { AppProvider } from "@/context/AppContext";
-import { classNames } from "@/utils";
 import Region from "@/components/layout/Region/Region";
 import { RegionsProvider } from "@/context/RegionContext";
 import BaseLayout from "@/components/layout/BaseLayout/BaseLayout";
@@ -29,10 +28,7 @@ export default function RootLayout({
       <RegionsProvider>
         <html
           lang="en"
-          className={classNames(
-            liberationSans.variable,
-            helveticaNeue.variable,
-          )}
+          className={`${liberationSans.variable} ${helveticaNeue.variable}`}
           >
             <head>
               <meta

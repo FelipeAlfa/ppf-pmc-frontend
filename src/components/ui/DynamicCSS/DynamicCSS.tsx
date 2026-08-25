@@ -1,4 +1,4 @@
-import { cssStyles } from "@/utils";
+import { cssStyles } from "@/lib/css";
 import { CSSProperties } from "react";
 
 interface DynamicCSSProps {

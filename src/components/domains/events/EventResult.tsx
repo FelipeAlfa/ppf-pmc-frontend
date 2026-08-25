@@ -1,6 +1,7 @@
 import Pluralizer from "@/components/ui/Pluralizer/Pluralizer";
 import Thumbnail from "@/components/ui/Thumbnail/Thumbnail";
 import Link from 'next/link';
+import { shortDate } from "@/lib/date";
 
 interface EventResultProps {
   date: number;
@@ -21,21 +22,29 @@ export default function EventResult({
   eventLink,
   thumbnailCover = false
 }: EventResultProps) {
+  const formattedDate = shortDate(date);
+
   return (
-    <div className="relative block">
-      <Link href={eventLink}>
-        <Thumbnail src={thumbnailUrl} alt={name} cover={thumbnailCover} />
-      </Link>
-      <div className="mt-4 font-helvetica-neue text-foreground">
-        <div className="my-1 text-xs font-light">{date}</div>
-        <Link className="text-[15px] font-medium" href={eventLink}>
-          {name}
-        </Link>
-        <div className="my-1 text-xs font-light">{location}</div>
-        <div className="mt-1 text-xs font-light tracking-wider">
-          <Pluralizer count={imageCount} singular="$n image" plural="$n images" />
+    <Link href={eventLink} className="group relative block">
+      <article>
+        <div className="transition-opacity duration-150 ease-linear group-hover:opacity-90">
+          <Thumbnail src={thumbnailUrl} alt={name} cover={thumbnailCover} />
         </div>
-      </div>
-    </div>
+        <div className="mt-3 font-helvetica-neue text-foreground">
+          <div className="text-[11px] font-light uppercase tracking-wider text-foreground/60">
+            {formattedDate}
+          </div>
+          <div className="mt-1 block text-[15px] font-medium leading-snug underline-offset-3 group-hover:underline">
+            {name}
+          </div>
+          <div className="mt-1 text-xs font-light leading-snug text-foreground/70">
+            {location}
+          </div>
+          <div className="mt-2 text-[11px] font-light uppercase tracking-wider text-foreground/55">
+            <Pluralizer count={imageCount} singular="$n image" plural="$n images" />
+          </div>
+        </div>
+      </article>
+    </Link>
   );
 }

@@ -9,6 +9,7 @@ export const dummySlideList = createDummyListData((index) => ({
 
 export const dummyPhotoResultList = createDummyListData((index) => ({
     code: index + 1000000,
+    name: `Photo Name ${index + 1}`,
     eventName: `Event Name ${index + 1}`,
     locationName: `Event Location ${index + 1}`,
     date: (new Date()).getTime(),

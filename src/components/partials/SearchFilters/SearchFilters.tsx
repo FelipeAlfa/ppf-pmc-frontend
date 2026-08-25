@@ -22,10 +22,10 @@ interface SearchFiltersProps {
 
 export default function SearchFilters({
   withDate = false,
-  people = [],
-  events = [],
-  locations = [],
-  photographers = []
+  people,
+  events,
+  locations,
+  photographers
 }: SearchFiltersProps) {
   const {
     addParamValue,
@@ -34,7 +34,28 @@ export default function SearchFilters({
     removeParamValue,
     setParam,
   } = useParamFilters();
-  const withAccordion = people.length > 0 || events.length > 0 || locations.length > 0 || photographers.length > 0;
+  const accordionItems = useMemo(() => {
+    const items: [
+      title: string,
+      param: string,
+      options: FilterOption[],
+    ][] = [];
+
+    if (!!people) {
+      items.push(["People", "person", people]);
+    }
+    if (!!events) {
+      items.push(["Events", "event", events]);
+    }
+    if (!!locations) {
+      items.push(["Locations", "location", locations]);
+    }
+    if (!!photographers) {
+      items.push(["Photographers", "photographer", photographers]);
+    }
+
+    return items;
+  }, [people, events, locations, photographers]);
   
   return (
     <div className="relative">
@@ -50,59 +71,23 @@ export default function SearchFilters({
             }} />
         );
       })()}
-      {withAccordion && (
+      {!!accordionItems.length && (
         <div className="mt-4">
           <Accordion
-            items={[
-              {
-                title: "People",
-                content: (
-                  <SearchFilterItems
-                    filterOptions={people}
-                    paramName="person"
-                    selectedValues={getParamValues(getParam("person"))}
-                    onAdd={addParamValue}
-                    onRemove={removeParamValue} />
-                ),
-                disabled: people.length === 0
-              },
-              {
-                title: "Events",
-                content: (
-                  <SearchFilterItems
-                    filterOptions={events}
-                    paramName="event"
-                    selectedValues={getParamValues(getParam("event"))}
-                    onAdd={addParamValue}
-                    onRemove={removeParamValue} />
-                ),
-                disabled: events.length === 0
-              },
-              {
-                title: "Locations",
-                content: (
-                  <SearchFilterItems
-                    filterOptions={locations}
-                    paramName="location"
-                    selectedValues={getParamValues(getParam("location"))}
-                    onAdd={addParamValue}
-                    onRemove={removeParamValue} />
-                ),
-                disabled: locations.length === 0
-              },
-              {
-                title: "Photographers",
-                content: (
-                  <SearchFilterItems
-                    filterOptions={photographers}
-                    paramName="photographer"
-                    selectedValues={getParamValues(getParam("photographer"))}
-                    onAdd={addParamValue}
-                    onRemove={removeParamValue} />
-                ),
-                disabled: photographers.length === 0
-              },
-            ]}  />
+            defaultOpenItems={withDate ? undefined : [0]}
+            items={accordionItems.map(([title, param, options]) => ({
+              title,
+              content: (
+                <SearchFilterItems
+                  filterOptions={options}
+                  paramName={param}
+                  selectedValues={getParamValues(getParam(param))}
+                  onAdd={addParamValue}
+                  onRemove={removeParamValue} />
+              ),
+              disabled: options.length === 0
+            }))}
+          />
         </div>
       )}
       {isPending && (

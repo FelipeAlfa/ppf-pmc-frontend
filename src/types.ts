@@ -23,9 +23,18 @@ export interface PhotoResults {
 
 export interface PhotoResult {
   code: number;
+  name: string;
   eventName: string;
   locationName: string;
   date: number;
   thumbnailUrl: string;
   link: string;
 };
+
+export const viewTypes = ["grid", "editorial", "carousel"] as const;
+
+export type ViewType = typeof viewTypes[number];
+
+export function isViewType(value: unknown): value is ViewType {
+  return typeof value === "string" && viewTypes.includes(value as ViewType);
+}

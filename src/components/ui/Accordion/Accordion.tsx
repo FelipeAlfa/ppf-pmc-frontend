@@ -54,11 +54,11 @@ export default function Accordion({
 
         return (
           <section key={index}>
-            <h3 className="px-4">
+            <h3>
               <button
                 id={buttonId}
                 type="button"
-                className="flex w-full cursor-pointer items-center justify-between gap-4 py-4 text-left text-foreground/80 text-xs font-bold uppercase tracking-wider transition-colors duration-100 ease-linear hover:text-brand-blue focus-visible:text-brand-blue focus-visible:outline-none disabled:cursor-not-allowed disabled:text-foreground/35 disabled:hover:text-foreground/35"
+                className="flex w-full cursor-pointer items-center justify-between gap-4 px-4 py-3 text-left text-foreground/80 text-xs font-bold uppercase tracking-wider transition-colors duration-100 ease-linear hover:text-brand-blue focus-visible:text-brand-blue focus-visible:outline-none disabled:cursor-not-allowed disabled:text-foreground/35 disabled:hover:text-foreground/35"
                 disabled={item.disabled}
                 aria-expanded={itemIsOpen}
                 aria-controls={panelId}

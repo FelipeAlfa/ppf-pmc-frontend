@@ -30,7 +30,7 @@ export default function ParamFilters({
   return (
     <div className="relative">
       <ul
-        className={`flex flex-wrap justify-start gap-2 md:justify-end ${isPending ? "pointer-events-none opacity-60" : ""}`.trim()}
+        className={`flex flex-wrap justify-start gap-2 ${isPending ? "pointer-events-none opacity-60" : ""}`.trim()}
         aria-label="Applied filters"
         aria-busy={isPending}>
         {visibleFilters.map((filter) => (

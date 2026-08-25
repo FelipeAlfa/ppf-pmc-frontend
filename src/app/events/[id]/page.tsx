@@ -1,11 +1,11 @@
 import Container from "@/components/layout/Container/Container";
 import ContentWithSidebar from "@/components/layout/ContentWithSidebar/ContentWithSidebar";
-import PhotoGrid from "@/components/domains/photos/PhotoGrid/PhotoGrid";
 import SearchBar from "@/components/partials/SearchBar/SearchBar";
 import {
   eventsDummyData,
   photosDummyData,
 } from "@/lib/dummy/dummyData";
+import { longDate } from "@/lib/date";
 
 interface EventDetailPageProps {
   params: Promise<{
@@ -33,7 +33,7 @@ export default async function EventDetailPage({ params }: EventDetailPageProps) 
                   </h1>
                   <div className="mt-4 space-y-1 text-sm leading-6">
                     <p>{event.location}</p>
-                    <p>{new Intl.DateTimeFormat("en", { dateStyle: "full" }).format(event.date)}</p>
+                    <p>{longDate(event.date)}</p>
                     <p>Photo - PMC Staff / PMC</p>
                   </div>
                 </div>
@@ -45,7 +45,6 @@ export default async function EventDetailPage({ params }: EventDetailPageProps) 
                 Dummy event detail content while we migrate the legacy AngularJS photo browsing flow.
               </p>
             </header>
-            <PhotoGrid photos={photosDummyData} />
           </section>
         </ContentWithSidebar>
       </Container>

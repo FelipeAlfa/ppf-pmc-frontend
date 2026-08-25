@@ -9,6 +9,7 @@ import {
   useTransition,
 } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { shortDate } from "@/lib/date";
 
 type ParamFilterValueType = "number" | "string" | "string[]";
 type ParamFilterParsedValue = string | number | Array<string | number>;
@@ -298,11 +299,7 @@ function serializeParamValue(config: ParamFilterConfig, value: ParamFilterParsed
 
 function formatParamValue(key: string, value: ParamFilterParsedValue) {
   if (key === "date" && typeof value === "number") {
-    return new Intl.DateTimeFormat("en-US", {
-      month: "short",
-      day: "numeric",
-      year: "numeric",
-    }).format(new Date(value));
+    return shortDate(value);
   }
 
   return String(value);
