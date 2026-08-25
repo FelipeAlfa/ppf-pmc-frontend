@@ -45,8 +45,8 @@ export const contentWithSidebarPanelInnerVariants = cva(
 export const contentWithSidebarTitleVariants = cva("whitespace-nowrap pr-3 text-xs font-bold uppercase tracking-wider transition duration-200 ease-linear", {
   variants: {
     collapsed: {
-      false: "delay-300 opacity-100",
-      true: "opacity-100 sm:opacity-0",
+      false: "opacity-100 sm:delay-150",
+      true: "opacity-100 sm:opacity-0 sm:duration-75",
     },
   },
   defaultVariants: {
@@ -57,8 +57,8 @@ export const contentWithSidebarTitleVariants = cva("whitespace-nowrap pr-3 text-
 export const contentWithSidebarContentVariants = cva("mt-5 transform overflow-visible transition-[max-height,opacity,transform] duration-200 ease-linear sm:transition", {
   variants: {
     collapsed: {
-      false: "max-h-none opacity-100 translate-y-0",
-      true: "max-h-0 opacity-0 sm:max-h-none sm:-translate-x-4",
+      false: "max-h-none opacity-100 translate-y-0 sm:delay-150",
+      true: "max-h-0 opacity-0 sm:max-h-none sm:-translate-x-4 sm:duration-75",
     },
   },
   defaultVariants: {
