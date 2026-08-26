@@ -5,6 +5,8 @@ import { publishingDummyData } from "@/lib/dummy/dummyData";
 import Image from "next/image";
 
 export default function PublishingPage() {
+  const publishingItems = publishingDummyData();
+
   return (
     <>
       <PageHero
@@ -13,7 +15,7 @@ export default function PublishingPage() {
         imageAlt="Patrick McMullan Company publishing catalog" />
       <Container verticalSpacing>
         <GridView
-          items={publishingDummyData}
+          items={publishingItems}
           renderItem={(product) => (
             <article>
               <div className="relative aspect-[3/4] overflow-hidden bg-[#eeeeee]">

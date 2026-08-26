@@ -5,6 +5,8 @@ import { archiveDummyData } from "@/lib/dummy/dummyData";
 import Image from "next/image";
 
 export default function ArchivePage() {
+  const archiveItems = archiveDummyData();
+
   return (
     <>
       <PageHero
@@ -22,7 +24,7 @@ export default function ArchivePage() {
         </div>
         <div className="mt-12">
           <GridView
-            items={archiveDummyData}
+            items={archiveItems}
             renderItem={(item) => (
               <article>
                 <div className="relative aspect-[4/3] overflow-hidden bg-[#eeeeee]">

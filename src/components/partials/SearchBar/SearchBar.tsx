@@ -37,7 +37,7 @@ export default function SearchBar({ initialSearchType = "photos" }: SearchBarPro
   useEffect(() => {
     const timeoutId = window.setTimeout(() => {
       if (searchValue.length >= 2) {
-        setOptionsPromise(dummyGetAutocompleteResults());
+        setOptionsPromise(dummyGetAutocompleteResults(12));
       }
       else {
         setOptionsPromise(null);

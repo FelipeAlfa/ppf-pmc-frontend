@@ -5,7 +5,7 @@ import SearchBar from "@/components/partials/SearchBar/SearchBar";
 import Sticky from "@/components/layout/Sticky/Sticky";
 import { Metadata } from "next";
 import ParamFiltersProvider from "@/context/ParamFiltersContext";
-import { dummyGetFilters, dummyGetParamFilterDetails, dummyGetPhotoResults } from "@/lib/dummy/dummyRequests";
+import { dummyGetFilters, dummyGetParamDetails, dummyGetPhotoResults } from "@/lib/dummy/dummyRequests";
 import Await from "@/components/core/Await";
 import LoadingBar from "@/components/ui/LoadingBar/LoadingBar";
 import PhotoSuspenseFallback from "@/components/domains/photos/PhotoSuspenseFallback";
@@ -27,9 +27,15 @@ export const metadata: Metadata = {
 };
 
 export default async function PhotosPage() {
-  const photoResultsPromise = dummyGetPhotoResults();
-  const filtersPromise = dummyGetFilters();
-  const paramFilterDetailsPromise = dummyGetParamFilterDetails();
+  const photoResultsPromise = dummyGetPhotoResults(64);
+  const filtersPromise = dummyGetFilters({
+    limit: 12,
+    people: 12,
+    events: 12,
+    locations: 12,
+    photographers: 12
+  });
+  const paramFilterDetailsPromise = dummyGetParamDetails(4);
   const photoResultsView = (await cookies()).get("view-switcher-photo-results")?.value;
   const photoResultsViewType = isViewType(photoResultsView) ? photoResultsView : "grid";
 

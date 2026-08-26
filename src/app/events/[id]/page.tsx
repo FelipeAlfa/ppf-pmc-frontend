@@ -8,7 +8,7 @@ import ParamFiltersProvider from "@/context/ParamFiltersContext";
 import { ViewSwitcherControls, ViewSwitcherProvider, ViewSwitcherView } from "@/components/ui/ViewSwitcher/ViewSwitcher";
 import GridView from "@/components/layout/GridView/GridView";
 import PhotoGridItem from "@/components/domains/photos/PhotoGridItem";
-import { dummyGetEvent, dummyGetPhotoResults } from "@/lib/dummy/dummyRequests";
+import { dummyGetEvent, dummyGetFilters, dummyGetPhotoResults } from "@/lib/dummy/dummyRequests";
 import EditorialView from "@/components/layout/EditorialView/EditorialView";
 import PhotoEditorialItem from "@/components/domains/photos/PhotoEditorialItem";
 import CarouselView from "@/components/layout/CarouselView/CarouselView";
@@ -21,10 +21,20 @@ interface EventDetailPageProps {
 }
 
 export default async function EventDetailPage({  }: EventDetailPageProps) {
-  const [eventData, photoResults] = await Promise.all([
-    dummyGetEvent(),
-    dummyGetPhotoResults(),
+  const [eventData, photoResults, {people, locations, photographers}] = await Promise.all([
+    dummyGetEvent({
+      id: "id-event-4"
+    }),
+    dummyGetPhotoResults(64),
+    dummyGetFilters({
+      limit: 12,
+      people: 20,
+      locations: 1,
+      photographers: 2,
+    }),
   ]);
+
+  if (!eventData) return null;
 
   return (
     <>
@@ -32,17 +42,21 @@ export default async function EventDetailPage({  }: EventDetailPageProps) {
         <SearchBar initialSearchType="events" />
       </Sticky>
       <Container verticalSpacing>
-        dada
         <ParamFiltersProvider>
           <ViewSwitcherProvider name="event-page">
             <ContentWithSidebar
               title="Filter photos"
-              sidebar={<SearchFilters people={[]} events={[]} locations={[]} photographers={[]} />}>
+              sidebar={
+                <SearchFilters
+                  people={people}
+                  locations={locations}
+                  photographers={photographers} />
+              }>
               <section>
                 <header className="mb-8 border-b border-[#eeeeee] pb-6">
                   <div className="flex flex-col gap-4 lg:flex-row lg:justify-between">
                     <div>
-                      <h1 className="text-2xl font-bold uppercase tracking-wider md:text-3xl">
+                      <h1 className="text-2xl font-bold tracking-wider md:text-3xl">
                         {eventData.name}
                       </h1>
                       <div className="mt-4 space-y-1 text-sm leading-6">

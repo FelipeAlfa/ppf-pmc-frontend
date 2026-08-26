@@ -18,8 +18,8 @@ export const metadata: Metadata = {
 
 export default async function Home() {
   const [slideshow, eventResults] = await Promise.all([
-    dummyGetSlideshow(),
-    dummyGetEventResults({ limit: 12 }),
+    dummyGetSlideshow(12),
+    dummyGetEventResults({ limit: 12, info: "info here" }),
   ]);
 
   return (

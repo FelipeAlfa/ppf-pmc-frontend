@@ -8,11 +8,12 @@ import Sticky from "@/components/layout/Sticky/Sticky";
 import { Metadata } from "next";
 import EventSuspenseFallback from "@/components/domains/events/EventSuspenseFallback";
 import ParamFiltersProvider from "@/context/ParamFiltersContext";
-import { dummyGetEventResults } from "@/lib/dummy/dummyRequests";
+import { dummyGetEventResults, dummyGetFilters } from "@/lib/dummy/dummyRequests";
 import Pagination from "@/components/ui/Pagination/Pagination";
 import SearchFilters from "@/components/partials/SearchFilters/SearchFilters";
 import GridView from "@/components/layout/GridView/GridView";
 import EventItem from "@/components/domains/events/EventItem";
+import LoadingBar from "@/components/ui/LoadingBar/LoadingBar";
 
 export const metadata: Metadata = {
   title: "Search events",
@@ -20,6 +21,12 @@ export const metadata: Metadata = {
 };
 
 export default function EventsPage() {
+  const filtersPromise = dummyGetFilters({
+    limit: 12,
+    people: 12,
+    locations: 12,
+    photographers: 12
+  });
   const eventResultsPromise = dummyGetEventResults({
     limit: 12,
   });
@@ -33,7 +40,17 @@ export default function EventsPage() {
         <ParamFiltersProvider>
           <ContentWithSidebar
             title="Filter events"
-            sidebar={<SearchFilters withDate people={[]} locations={[]} photographers={[]} />}>
+            sidebar={
+              <Await promise={filtersPromise} suspense={<LoadingBar />}>
+                {({ people, locations, photographers }) => (
+                  <SearchFilters
+                    withDate
+                    people={people}
+                    locations={locations}
+                    photographers={photographers} />
+                )}
+              </Await>
+            }>
             <section>
               <div className="mb-6 flex flex-col gap-4">
                 <div>

@@ -6,6 +6,8 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default function ServicesPage() {
+  const services = servicesDummyData();
+
   return (
     <>
       <PageHero
@@ -28,7 +30,7 @@ export default function ServicesPage() {
           </Link>
         </div>
         <GridView
-          items={servicesDummyData}
+          items={services}
           renderItem={(service) => (
             <article>
               <h2 className="mb-3 text-sm font-bold uppercase tracking-wider">

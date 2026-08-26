@@ -5,7 +5,7 @@ import { photographersDummyData } from "@/lib/dummy/dummyData";
 import Image from "next/image";
 
 export default function AboutPage() {
-  const [mainPhotographer, ...photographers] = photographersDummyData;
+  const [mainPhotographer, ...photographers] = photographersDummyData();
 
   return (
     <>

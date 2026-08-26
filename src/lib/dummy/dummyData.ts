@@ -1,32 +1,17 @@
-import { createDummyListData } from "./dummyDataUtils";
+import { createDummyList } from "./dummyUtils";
 
-export const dummySlideList = createDummyListData((index) => ({
+// SLIDESHOW
+
+export const dummySlideList = createDummyList((index) => ({
     title: `Slide ${index + 1}`,
     subTitle: `Subtitle ${index + 1}`,
     imageSrc: index % 2 === 0 ? "https://picsum.photos/1600/1200" : "https://picsum.photos/1920/1080",
     link: "/events"
 }));
 
-export const dummyPhotoResultList = createDummyListData((index) => ({
-    code: index + 1000000,
-    name: `Photo Name ${index + 1}`,
-    eventName: `Event Name ${index + 1}`,
-    locationName: `Event Location ${index + 1}`,
-    date: (new Date()).getTime(),
-    thumbnailUrl: index % 2 === 0 ? "https://picsum.photos/800/600" : "https://picsum.photos/600/800",
-    link: `/photos/${index + 1000000}`
-}));
+// SEARCH BAR
 
-export const dummyEventResultList = createDummyListData((index) => ({
-    name: `Event Name ${index + 1}`,
-    location: `Event Location ${index + 1}`,
-    date: (new Date()).getTime(),
-    imageCount: 10,
-    thumbnailUrl: index % 2 === 0 ? "https://picsum.photos/800/600" : "https://picsum.photos/600/800",
-    link: `/events/${index + 1}`
-}));
-
-export const dummyAutocompleteResultList = createDummyListData((index, origin) => ({
+export const dummyAutocompleteResultList = createDummyList((index, origin) => ({
     label: `${origin.name} ${index + 1}`,
     group: origin.group,
     data: {
@@ -39,28 +24,64 @@ export const dummyAutocompleteResultList = createDummyListData((index, origin) =
     {name: "Photographer", group: "Photographers"}
 ]);
 
+// SIDEBAR
 
-// old
+export const dummySeachFilterPersonList = createDummyList((index) => ({
+    id: `id-person-${index + 1}`,
+    name: `Person Name ${index + 1}`,
+}))
 
-
-
-export const slideshowDummyData = Array.from({ length: 25 }, (_, i) => ({
-    title: `Slide ${i + 1}`,
-    subTitle: `Subtitle ${i + 1}`,
-    imageSrc: i % 2 === 0 ? "https://picsum.photos/1600/1200" : "https://picsum.photos/1920/1080",
-    link: "/events"
+export const dummySeachFilterEventList = createDummyList((index) => ({
+    id: `id-event-${index + 1}`,
+    name: `Event Name ${index + 1}`,
 }));
 
-export const eventsDummyData = Array.from({ length: 16 }, (_, i) => ({
-    name: `Event Name ${i + 1}`,
-    location: `Event Location ${i + 1}`,
+export const dummySeachFilterLocationList = createDummyList((index) => ({
+    id: `id-location-${index + 1}`,
+    name: `Location Name ${index + 1}`,
+}));
+
+export const dummySeachFilterPhotographerList = createDummyList((index) => ({
+    id: `id-photographer-${index + 1}`,
+    name: `Photographer Name ${index + 1}`,
+}));
+
+// RESULT LIST: PHOTOS
+
+export const dummyPhotoResultList = createDummyList((index) => ({
+    code: index + 1000000,
+    name: `Photo Name ${index + 1}`,
+    eventName: `Event Name ${index + 1}`,
+    locationName: `Event Location ${index + 1}`,
+    date: (new Date()).getTime(),
+    thumbnailUrl: index % 2 === 0 ? "https://picsum.photos/800/600" : "https://picsum.photos/600/800",
+    link: `/photos/${index + 1000000}`
+}));
+
+// RESULT LIST: EVENTS
+
+export const dummyEventResultList = createDummyList((index) => ({
+    name: `Event Name ${index + 1}`,
+    location: `Event Location ${index + 1}`,
     date: (new Date()).getTime(),
     imageCount: 10,
-    thumbnailUrl: i % 2 === 0 ? "https://picsum.photos/800/600" : "https://picsum.photos/600/800",
-    link: `/events/${i + 1}`
+    thumbnailUrl: index % 2 === 0 ? "https://picsum.photos/800/600" : "https://picsum.photos/600/800",
+    link: `/events/${index + 1}`
 }));
 
-export const servicesDummyData = [
+// PAGE: PUBLISHING
+
+export const dummyPublishingList = createDummyList((index) => ({
+    id: `id-publishing-${index + 1}`,
+    name: `Publishing Name ${index + 1}`,
+    excerpt: `Publishing Excerpt ${index + 1}: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.`,
+    price: 2500,
+    imageSrc: index % 2 === 0 ? "https://picsum.photos/1600/1200" : "https://picsum.photos/1920/1080",
+}));
+
+// PAGE: SERVICES
+
+export const servicesDummyData = createDummyList((_, origin) => origin, [
     {
         title: "Event Photography",
         imageSrc: "/images/service-event-photography.jpg",
@@ -91,9 +112,11 @@ export const servicesDummyData = [
         imageSrc: "/images/service-corporate.jpg",
         description: "Photography support for corporate events, conferences, brand moments, and internal media.",
     },
-];
+]);
 
-export const archiveDummyData = [
+// PAGE: ARCHIVE
+
+export const archiveDummyData = createDummyList((_, origin) => origin, [
     {
         title: "Archive Image 1",
         imageSrc: "/images/archive-image-1.jpg",
@@ -114,9 +137,9 @@ export const archiveDummyData = [
         title: "Secrets",
         imageSrc: "/images/secrets_collage.jpg",
     },
-];
+]);
 
-export const photographersDummyData = [
+export const photographersDummyData = createDummyList((_, origin) => origin, [
     {
         name: "Patrick McMullan",
         imageSrc: "/images/patrick-profile-pic.jpg",
@@ -132,9 +155,11 @@ export const photographersDummyData = [
         imageSrc: "/images/team-member.jpg",
         role: "Production",
     },
-];
+]);
 
-export const publishingDummyData = [
+// PAGE: PUBLISHING
+
+export const publishingDummyData = createDummyList((_, origin) => origin, [
     {
         id: "glamor-girls",
         name: "Glamor Girls",
@@ -156,26 +181,4 @@ export const publishingDummyData = [
         price: 5500,
         imageSrc: "/images/glamor_girls_collage.jpg",
     },
-];
-
-export const filterGroupsDummyData = [
-    {
-        title: "People",
-        items: ["Patrick McMullan", "Gala Guests", "Designers", "Artists"],
-    },
-    {
-        title: "Locations",
-        items: ["New York", "Hamptons", "Los Angeles", "Miami"],
-    },
-    {
-        title: "Photographers",
-        items: ["PMC Staff", "Patrick McMullan", "Guest Photographer"],
-    },
-];
-
-export const photosDummyData = Array.from({ length: 18 }, (_, i) => ({
-    id: i + 1,
-    title: `Photo ${i + 1}`,
-    alt: `Event photo ${i + 1}`,
-    imageSrc: i % 2 === 0 ? "https://picsum.photos/900/1200" : "https://picsum.photos/1200/900",
-}));
+]);
