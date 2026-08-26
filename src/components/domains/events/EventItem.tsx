@@ -4,28 +4,28 @@ import Link from 'next/link';
 import { shortDate } from "@/lib/date";
 
 interface EventItemProps {
+  id: string;
   date: number;
   name: string;
   location: string;
   imageCount: number;
   thumbnailUrl: string;
   thumbnailCover?: boolean;
-  eventLink: string;
 }
 
 export default function EventItem({
+  id,
   date,
   name,
   location,
   imageCount,
   thumbnailUrl,
-  eventLink,
   thumbnailCover = false
 }: EventItemProps) {
   const formattedDate = shortDate(date);
 
   return (
-    <Link href={eventLink} className="group relative block">
+    <Link href={`/events/${id}`} className="group relative block">
       <article>
         <div className="transition-opacity duration-150 ease-linear group-hover:opacity-90">
           <Thumbnail src={thumbnailUrl} alt={name} cover={thumbnailCover} />

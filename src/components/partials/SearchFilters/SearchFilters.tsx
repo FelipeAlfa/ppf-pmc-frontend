@@ -2,7 +2,8 @@
 
 import Accordion from "@/components/ui/Accordion/Accordion";
 import Calendar from "@/components/ui/Calendar/Calendar";
-import { useParamFilters } from "@/context/ParamFiltersContext";
+import LoadingOverlay from "@/components/ui/LoadingOverlay/LoadingOverlay";
+import { useParamState } from "@/context/ParamStateContext";
 import { faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useMemo, useState } from "react";
@@ -33,7 +34,7 @@ export default function SearchFilters({
     isPending,
     removeParamValue,
     setParam,
-  } = useParamFilters();
+  } = useParamState();
   const accordionItems = useMemo(() => {
     const items: [
       title: string,
@@ -58,21 +59,24 @@ export default function SearchFilters({
   }, [people, events, locations, photographers]);
   
   return (
-    <div className="relative">
+    <div>
       {withDate && (() => {
         const date = getParam("date");
         const calendarValue = typeof date === "number" ? date : undefined;
 
         return (
-          <Calendar
-            value={Number.isFinite(calendarValue) ? calendarValue : undefined}
-            onSelect={(datetime) => {
-              setParam("date", datetime);
-            }} />
+          <div className="relative">
+            <Calendar
+              value={Number.isFinite(calendarValue) ? calendarValue : undefined}
+              onSelect={(datetime) => {
+                setParam("date", datetime);
+              }} />
+            {isPending && <LoadingOverlay />}
+          </div>
         );
       })()}
       {!!accordionItems.length && (
-        <div className="mt-4">
+        <div className="relative mt-4">
           <Accordion
             defaultOpenItems={withDate ? undefined : [0]}
             items={accordionItems.map(([title, param, options]) => ({
@@ -88,14 +92,7 @@ export default function SearchFilters({
               disabled: options.length === 0
             }))}
           />
-        </div>
-      )}
-      {isPending && (
-        <div
-          className="absolute inset-0 flex items-center justify-center rounded-sm bg-white/70"
-          role="status"
-          aria-label="Loading events">
-          <span className="h-8 w-8 animate-spin rounded-full border-2 border-foreground/20 border-t-brand-blue" />
+          {isPending && <LoadingOverlay />}
         </div>
       )}
     </div>

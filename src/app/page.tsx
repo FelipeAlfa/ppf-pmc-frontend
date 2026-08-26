@@ -33,12 +33,12 @@ export default async function Home() {
           items={eventResults.events}
           renderItem={(eventData) => (
             <EventItem
+              id={eventData.id}
               date={eventData.date}
               name={eventData.name}
               location={eventData.location}
               imageCount={eventData.imageCount}
               thumbnailUrl={eventData.thumbnailUrl}
-              eventLink={eventData.link}
               thumbnailCover />
           )} />
         <div className="flex justify-center mt-16">

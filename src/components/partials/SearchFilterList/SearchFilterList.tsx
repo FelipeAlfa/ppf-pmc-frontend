@@ -2,25 +2,15 @@
 
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useParamFilters } from "@/context/ParamFiltersContext";
+import { useParamState } from "@/context/ParamStateContext";
+import LoadingOverlay from "@/components/ui/LoadingOverlay/LoadingOverlay";
 
-interface ParamFiltersProps {
-  details?: {
-    events: {id: string, name: string}[];
-    people: {id: string, name: string}[];
-    locations: {id: string, name: string}[];
-    photographers: {id: string, name: string}[];
-  };
-}
-
-export default function ParamFilters({
-  details
-}: ParamFiltersProps) {
+export default function SearchFilterList() {
   const {
     filters,
     isPending,
     removeParam,
-  } = useParamFilters();
+  } = useParamState();
   const visibleFilters = filters.filter((filter) => filter.key !== "p");
 
   if (visibleFilters.length === 0) {
@@ -54,14 +44,7 @@ export default function ParamFilters({
           </li>
         ))}
       </ul>
-      {isPending && (
-        <div
-          className="absolute inset-0 flex items-center justify-center rounded-sm bg-white/70"
-          role="status"
-          aria-label="Updating filters">
-          <span className="h-5 w-5 animate-spin rounded-full border-2 border-foreground/20 border-t-brand-blue" />
-        </div>
-      )}
+      {isPending && <LoadingOverlay small />}
     </div>
   );
 }

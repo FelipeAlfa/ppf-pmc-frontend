@@ -9,6 +9,10 @@ import {
   dummyGetAutocompleteResults,
 } from '@/lib/dummy/dummyRequests';
 import { useRouter } from "next/navigation";
+import {
+  createSearchParamsStateFromParams,
+  writeSearchParamsState,
+} from "@/lib/searchParams";
 
 type SearchType = "photos" | "events";
 
@@ -52,10 +56,8 @@ export default function SearchBar({ initialSearchType = "photos" }: SearchBarPro
   const doSearch = useCallback((params: Record<string, string>) => {
     if (isPending) return;
     const url = searchType === "photos" ? "/photos" : "/events";
-    const searchParams = new URLSearchParams(
-      Object
-        .entries(params)
-        .filter(([, value]) => value.trim() !== "")
+    const searchParams = writeSearchParamsState(
+      createSearchParamsStateFromParams(params)
     );
     const queryString = searchParams.toString();
     const href = queryString ? `${url}?${queryString}` : url;

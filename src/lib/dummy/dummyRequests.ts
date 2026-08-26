@@ -18,7 +18,7 @@ export const dummyGetEventResults = createDummyRequest(({ limit }) => ({
   events: dummyEventResultList(limit),
   totalPages: 19,
   totalRecords: 125,
-  currentPage: 1
+  currentPage: 1,
 }));
 
 export const dummyGetPhotoResults = createDummyRequest(({ limit }) => ({
@@ -48,13 +48,6 @@ export const dummyGetFilters = createDummyRequest(({
     locations: limits.locations > 0 ? dummySeachFilterLocationList(limits.locations) : undefined,
     photographers: limits.photographers > 0 ? dummySeachFilterPhotographerList(limits.photographers) : undefined,
   };
-});
-
-export const dummyGetParamDetails = createDummyRequest({
-  events: dummySeachFilterEventList(4),
-  people: dummySeachFilterPersonList(4),
-  locations: dummySeachFilterLocationList(4),
-  photographers: dummySeachFilterPhotographerList(4),
 });
 
 export const dummyGetEvent = createDummyRequest(({ id }) => {

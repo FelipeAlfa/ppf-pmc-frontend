@@ -61,6 +61,7 @@ export const dummyPhotoResultList = createDummyList((index) => ({
 // RESULT LIST: EVENTS
 
 export const dummyEventResultList = createDummyList((index) => ({
+    id: `id-event-${index + 1}`,
     name: `Event Name ${index + 1}`,
     location: `Event Location ${index + 1}`,
     date: (new Date()).getTime(),

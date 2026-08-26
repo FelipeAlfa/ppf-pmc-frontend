@@ -2,25 +2,28 @@
 import Await from "@/components/core/Await";
 import Container from "@/components/layout/Container/Container";
 import ContentWithSidebar from "@/components/layout/ContentWithSidebar/ContentWithSidebar";
-import ParamFilters from "@/components/partials/ParamFilters/ParamFilters";
+import SearchFilterList from "@/components/partials/SearchFilterList/SearchFilterList";
 import SearchBar from "@/components/partials/SearchBar/SearchBar";
 import Sticky from "@/components/layout/Sticky/Sticky";
-import { Metadata } from "next";
 import EventSuspenseFallback from "@/components/domains/events/EventSuspenseFallback";
-import ParamFiltersProvider from "@/context/ParamFiltersContext";
+import ParamStateProvider from "@/context/ParamStateContext";
 import { dummyGetEventResults, dummyGetFilters } from "@/lib/dummy/dummyRequests";
 import Pagination from "@/components/ui/Pagination/Pagination";
 import SearchFilters from "@/components/partials/SearchFilters/SearchFilters";
 import GridView from "@/components/layout/GridView/GridView";
 import EventItem from "@/components/domains/events/EventItem";
 import LoadingBar from "@/components/ui/LoadingBar/LoadingBar";
+import { readSearchParamsState, type PageSearchParams } from "@/lib/searchParams";
 
-export const metadata: Metadata = {
-  title: "Search events",
-  description: "Patrick McMullan Website",
-};
+interface EventsPageProps {
+  searchParams: Promise<PageSearchParams>;
+}
 
-export default function EventsPage() {
+export default async function EventsPage({
+  searchParams,
+}: EventsPageProps) {
+  const resolvedSearchParams = await searchParams;
+  const eventResultParams = readSearchParamsState(resolvedSearchParams);
   const filtersPromise = dummyGetFilters({
     limit: 12,
     people: 12,
@@ -28,6 +31,7 @@ export default function EventsPage() {
     photographers: 12
   });
   const eventResultsPromise = dummyGetEventResults({
+    ...eventResultParams,
     limit: 12,
   });
 
@@ -37,7 +41,7 @@ export default function EventsPage() {
         <SearchBar initialSearchType="events" />
       </Sticky>
       <Container verticalSpacing>
-        <ParamFiltersProvider>
+        <ParamStateProvider>
           <ContentWithSidebar
             title="Filter events"
             sidebar={
@@ -58,12 +62,12 @@ export default function EventsPage() {
                     Events
                   </h1>
                   <p className="mt-1 text-sm">
-                    <Await promise={eventResultsPromise} suspense="Loading...">
+                    <Await promise={eventResultsPromise} suspense="">
                       {(eventResults) => eventResults.totalRecords + ' results'}
                     </Await>
                   </p>
                 </div>
-                <ParamFilters />
+                <SearchFilterList />
               </div>
               <Await
                 promise={eventResultsPromise}
@@ -74,12 +78,12 @@ export default function EventsPage() {
                       items={eventResults.events}
                       renderItem={(eventData) => (
                         <EventItem
+                          id={eventData.id}
                           date={eventData.date}
                           name={eventData.name}
                           location={eventData.location}
                           imageCount={eventData.imageCount}
-                          thumbnailUrl={eventData.thumbnailUrl}
-                          eventLink={eventData.link} />
+                          thumbnailUrl={eventData.thumbnailUrl} />
                       )} />
                     {eventResults.events.length > 0 && (
                       <Pagination
@@ -91,7 +95,7 @@ export default function EventsPage() {
               </Await>
             </section>
           </ContentWithSidebar>
-        </ParamFiltersProvider>
+        </ParamStateProvider>
       </Container>
     </>
   );

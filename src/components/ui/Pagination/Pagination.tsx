@@ -8,7 +8,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { type KeyboardEvent, useMemo } from "react";
-import { useParamFilters } from "@/context/ParamFiltersContext";
+import { useParamState } from "@/context/ParamStateContext";
 import Button from "../Button/Button";
 
 interface PaginationProps {
@@ -24,7 +24,7 @@ export default function Pagination({
     isPending,
     removeParam,
     setParam,
-  } = useParamFilters();
+  } = useParamState();
   const lastPage = useMemo(() => {
     if (!Number.isFinite(totalPages)) {
       return 1;

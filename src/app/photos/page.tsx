@@ -1,11 +1,11 @@
 import Container from "@/components/layout/Container/Container";
 import ContentWithSidebar from "@/components/layout/ContentWithSidebar/ContentWithSidebar";
-import ParamFilters from "@/components/partials/ParamFilters/ParamFilters";
+import ParamFilters from "@/components/partials/SearchFilterList/SearchFilterList";
 import SearchBar from "@/components/partials/SearchBar/SearchBar";
 import Sticky from "@/components/layout/Sticky/Sticky";
 import { Metadata } from "next";
-import ParamFiltersProvider from "@/context/ParamFiltersContext";
-import { dummyGetFilters, dummyGetParamDetails, dummyGetPhotoResults } from "@/lib/dummy/dummyRequests";
+import ParamStateProvider from "@/context/ParamStateContext";
+import { dummyGetFilters, dummyGetPhotoResults } from "@/lib/dummy/dummyRequests";
 import Await from "@/components/core/Await";
 import LoadingBar from "@/components/ui/LoadingBar/LoadingBar";
 import PhotoSuspenseFallback from "@/components/domains/photos/PhotoSuspenseFallback";
@@ -20,14 +20,26 @@ import EditorialView from "@/components/layout/EditorialView/EditorialView";
 import PhotoEditorialItem from "@/components/domains/photos/PhotoEditorialItem";
 import CarouselView from "@/components/layout/CarouselView/CarouselView";
 import Image from "next/image";
+import { readSearchParamsState, type PageSearchParams } from "@/lib/searchParams";
 
 export const metadata: Metadata = {
   title: "Search photos",
   description: "Patrick McMullan Website",
 };
 
-export default async function PhotosPage() {
-  const photoResultsPromise = dummyGetPhotoResults(64);
+interface PhotosPageProps {
+  searchParams: Promise<PageSearchParams>;
+}
+
+export default async function PhotosPage({
+  searchParams,
+}: PhotosPageProps) {
+  const resolvedSearchParams = await searchParams;
+  const photoResultParams = readSearchParamsState(resolvedSearchParams);
+  const photoResultsPromise = dummyGetPhotoResults({
+    ...photoResultParams,
+    limit: 64,
+  });
   const filtersPromise = dummyGetFilters({
     limit: 12,
     people: 12,
@@ -35,7 +47,6 @@ export default async function PhotosPage() {
     locations: 12,
     photographers: 12
   });
-  const paramFilterDetailsPromise = dummyGetParamDetails(4);
   const photoResultsView = (await cookies()).get("view-switcher-photo-results")?.value;
   const photoResultsViewType = isViewType(photoResultsView) ? photoResultsView : "grid";
 
@@ -45,7 +56,7 @@ export default async function PhotosPage() {
         <SearchBar initialSearchType="photos" />
       </Sticky>
       <Container verticalSpacing>
-        <ParamFiltersProvider>
+        <ParamStateProvider>
           <ContentWithSidebar
             title="Filter photos"
             sidebar={(
@@ -68,7 +79,7 @@ export default async function PhotosPage() {
                         Photos
                       </h1>
                       <p className="mt-1 text-sm">
-                        <Await promise={photoResultsPromise} suspense="Loading...">
+                        <Await promise={photoResultsPromise} suspense="">
                           {(photoResults) => photoResults.totalRecords + ' results'}
                         </Await>
                       </p>
@@ -77,11 +88,7 @@ export default async function PhotosPage() {
                       <ViewSwitcherControls views={["grid", "editorial", "carousel"]} />
                     </div>
                   </div>
-                  <Await promise={paramFilterDetailsPromise} suspense={null}>
-                    {(paramFilterDetails) => (
-                      <ParamFilters details={paramFilterDetails} />
-                    )}
-                  </Await>
+                  <ParamFilters />
                 </div>
                 <Await
                   promise={photoResultsPromise}
@@ -142,7 +149,7 @@ export default async function PhotosPage() {
               </section>
             </ViewSwitcherProvider>
           </ContentWithSidebar>
-        </ParamFiltersProvider>
+        </ParamStateProvider>
       </Container>
     </>
   );

@@ -58,7 +58,7 @@ export const createDummyList: createDummyDataListGeneratorFunction = <D, O>(
 
 type DummyListRequestInputParams = {
     limit?: number;
-    [key: string]: string | number | boolean | undefined;
+    [key: string]: string | string[] | number | boolean | null | undefined;
 }
 
 type DummyListRequestHandler = DummyListHandler<unknown>;
@@ -121,10 +121,10 @@ export function createDummyRequest<D>(
 }
 
 export const asLimit = (
-    data: string | number | boolean | undefined,
+    data: string | string[] | number | boolean | null | undefined,
     fallbackLimit?: number) => {
-    if (data !== undefined) {
-        const n = Number(data);
+    if (data !== undefined && data !== null) {
+        const n = Number(Array.isArray(data) ? data[0] : data);
 
         if (!Number.isNaN(n) && n > -1) {
         return n;

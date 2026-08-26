@@ -4,7 +4,7 @@ import SearchBar from "@/components/partials/SearchBar/SearchBar";
 import { longDate } from "@/lib/date";
 import Sticky from "@/components/layout/Sticky/Sticky";
 import SearchFilters from "@/components/partials/SearchFilters/SearchFilters";
-import ParamFiltersProvider from "@/context/ParamFiltersContext";
+import ParamStateProvider from "@/context/ParamStateContext";
 import { ViewSwitcherControls, ViewSwitcherProvider, ViewSwitcherView } from "@/components/ui/ViewSwitcher/ViewSwitcher";
 import GridView from "@/components/layout/GridView/GridView";
 import PhotoGridItem from "@/components/domains/photos/PhotoGridItem";
@@ -13,6 +13,9 @@ import EditorialView from "@/components/layout/EditorialView/EditorialView";
 import PhotoEditorialItem from "@/components/domains/photos/PhotoEditorialItem";
 import CarouselView from "@/components/layout/CarouselView/CarouselView";
 import Image from "next/image";
+import Pagination from "@/components/ui/Pagination/Pagination";
+import type { Metadata } from "next";
+import { cache } from "react";
 
 interface EventDetailPageProps {
   params: Promise<{
@@ -20,11 +23,25 @@ interface EventDetailPageProps {
   }>;
 }
 
-export default async function EventDetailPage({  }: EventDetailPageProps) {
+const getEventData = cache((id: string) => (
+  dummyGetEvent({ id })
+));
+
+export async function generateMetadata({
+  params,
+}: EventDetailPageProps): Promise<Metadata> {
+  const { id } = await params;
+  const eventData = await getEventData(id);
+
+  return {
+    title: (eventData?.name ?? "Event") + " - Patrick McMullan",
+  };
+}
+
+export default async function EventDetailPage({ params }: EventDetailPageProps) {
+  const { id } = await params;
   const [eventData, photoResults, {people, locations, photographers}] = await Promise.all([
-    dummyGetEvent({
-      id: "id-event-4"
-    }),
+    getEventData(id),
     dummyGetPhotoResults(64),
     dummyGetFilters({
       limit: 12,
@@ -42,7 +59,7 @@ export default async function EventDetailPage({  }: EventDetailPageProps) {
         <SearchBar initialSearchType="events" />
       </Sticky>
       <Container verticalSpacing>
-        <ParamFiltersProvider>
+        <ParamStateProvider pathname="/photos">
           <ViewSwitcherProvider name="event-page">
             <ContentWithSidebar
               title="Filter photos"
@@ -119,10 +136,15 @@ export default async function EventDetailPage({  }: EventDetailPageProps) {
                         className="block h-full w-full object-cover" />
                     )} />
                 </ViewSwitcherView>
+                {photoResults.photos.length > 0 && (
+                  <Pagination
+                    currentPage={photoResults.currentPage}
+                    totalPages={photoResults.totalPages} />
+                )}
               </section>
             </ContentWithSidebar>
           </ViewSwitcherProvider>
-        </ParamFiltersProvider>
+        </ParamStateProvider>
       </Container>
     </>
   );
