@@ -1,16 +1,15 @@
 import Container from "@/components/layout/Container/Container";
 import ContentWithSidebar from "@/components/layout/ContentWithSidebar/ContentWithSidebar";
-import ParamFilters from "@/components/partials/SearchFilterList/SearchFilterList";
-import SearchBar from "@/components/partials/SearchBar/SearchBar";
+import ParamFilters from "@/components/domains/search/SearchFilterList";
+import SearchBar from "@/components/domains/search/SearchBar";
 import Sticky from "@/components/layout/Sticky/Sticky";
 import { Metadata } from "next";
 import ParamStateProvider from "@/context/ParamStateContext";
 import { dummyGetFilters, dummyGetPhotoResults } from "@/lib/dummy/dummyRequests";
 import Await from "@/components/core/Await";
-import LoadingBar from "@/components/ui/LoadingBar/LoadingBar";
 import PhotoSuspenseFallback from "@/components/domains/photos/PhotoSuspenseFallback";
 import Pagination from "@/components/ui/Pagination/Pagination";
-import SearchFilters from "@/components/partials/SearchFilters/SearchFilters";
+import SearchFilters from "@/components/domains/search/SearchFilters";
 import { cookies } from "next/headers";
 import { isViewType } from "@/types";
 import { ViewSwitcherControls, ViewSwitcherProvider, ViewSwitcherView } from "@/components/ui/ViewSwitcher/ViewSwitcher";
@@ -21,6 +20,7 @@ import PhotoEditorialItem from "@/components/domains/photos/PhotoEditorialItem";
 import CarouselView from "@/components/layout/CarouselView/CarouselView";
 import Image from "next/image";
 import { readSearchParamsState, type PageSearchParams } from "@/lib/searchParams";
+import SearchFiltersSuspenseFallback from "@/components/domains/search/SearchFiltersSuspenseFallback";
 
 export const metadata: Metadata = {
   title: "Search photos",
@@ -60,7 +60,7 @@ export default async function PhotosPage({
           <ContentWithSidebar
             title="Filter photos"
             sidebar={(
-              <Await promise={filtersPromise} suspense={<LoadingBar />}>
+              <Await promise={filtersPromise} suspense={<SearchFiltersSuspenseFallback placehold="lists" />}>
                 {({ events, people, locations, photographers }) => (
                   <SearchFilters
                     events={events}

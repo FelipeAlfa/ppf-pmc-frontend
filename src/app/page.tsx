@@ -1,6 +1,6 @@
 import Button from "@/components/ui/Button/Button";
 import Container from "@/components/layout/Container/Container";
-import SearchBar from "@/components/partials/SearchBar/SearchBar";
+import SearchBar from "@/components/domains/search/SearchBar";
 import Slideshow from "@/components/partials/Slideshow/Slideshow";
 import Sticky from "@/components/layout/Sticky/Sticky";
 import { Metadata } from "next";

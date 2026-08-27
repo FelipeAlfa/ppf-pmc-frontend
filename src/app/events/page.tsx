@@ -2,18 +2,18 @@
 import Await from "@/components/core/Await";
 import Container from "@/components/layout/Container/Container";
 import ContentWithSidebar from "@/components/layout/ContentWithSidebar/ContentWithSidebar";
-import SearchFilterList from "@/components/partials/SearchFilterList/SearchFilterList";
-import SearchBar from "@/components/partials/SearchBar/SearchBar";
+import SearchFilterList from "@/components/domains/search/SearchFilterList";
+import SearchBar from "@/components/domains/search/SearchBar";
 import Sticky from "@/components/layout/Sticky/Sticky";
 import EventSuspenseFallback from "@/components/domains/events/EventSuspenseFallback";
 import ParamStateProvider from "@/context/ParamStateContext";
 import { dummyGetEventResults, dummyGetFilters } from "@/lib/dummy/dummyRequests";
 import Pagination from "@/components/ui/Pagination/Pagination";
-import SearchFilters from "@/components/partials/SearchFilters/SearchFilters";
+import SearchFilters from "@/components/domains/search/SearchFilters";
 import GridView from "@/components/layout/GridView/GridView";
 import EventItem from "@/components/domains/events/EventItem";
-import LoadingBar from "@/components/ui/LoadingBar/LoadingBar";
 import { readSearchParamsState, type PageSearchParams } from "@/lib/searchParams";
+import SearchFiltersSuspenseFallback from "@/components/domains/search/SearchFiltersSuspenseFallback";
 
 interface EventsPageProps {
   searchParams: Promise<PageSearchParams>;
@@ -45,7 +45,7 @@ export default async function EventsPage({
           <ContentWithSidebar
             title="Filter events"
             sidebar={
-              <Await promise={filtersPromise} suspense={<LoadingBar />}>
+              <Await promise={filtersPromise} suspense={<SearchFiltersSuspenseFallback />}>
                 {({ people, locations, photographers }) => (
                   <SearchFilters
                     withDate

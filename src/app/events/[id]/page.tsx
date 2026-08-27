@@ -1,9 +1,9 @@
 import Container from "@/components/layout/Container/Container";
 import ContentWithSidebar from "@/components/layout/ContentWithSidebar/ContentWithSidebar";
-import SearchBar from "@/components/partials/SearchBar/SearchBar";
+import SearchBar from "@/components/domains/search/SearchBar";
 import { longDate } from "@/lib/date";
 import Sticky from "@/components/layout/Sticky/Sticky";
-import SearchFilters from "@/components/partials/SearchFilters/SearchFilters";
+import SearchFilters from "@/components/domains/search/SearchFilters";
 import ParamStateProvider from "@/context/ParamStateContext";
 import { ViewSwitcherControls, ViewSwitcherProvider, ViewSwitcherView } from "@/components/ui/ViewSwitcher/ViewSwitcher";
 import GridView from "@/components/layout/GridView/GridView";
