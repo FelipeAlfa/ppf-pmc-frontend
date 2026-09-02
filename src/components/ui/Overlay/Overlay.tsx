@@ -28,7 +28,7 @@ export default function Overlay({
   }, [active]);
 
   return (
-    <div className={overlayVariants({ active })} onMouseDown={onBackgroundClick && ((event) => {
+    <div data-overlay className={overlayVariants({ active })} onMouseDown={onBackgroundClick && ((event) => {
       event.preventDefault();
       event.stopPropagation();
       onBackgroundClick(event);

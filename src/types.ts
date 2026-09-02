@@ -1,24 +1,25 @@
-export interface EventResults {
-  events: EventResult[];
+export interface Results {
   totalPages: number;
   totalRecords: number;
   currentPage: number;
+}
+
+export interface EventResults extends Results {
+  events: EventResult[];
+};
+
+export interface PhotoResults extends Results {
+  photos: PhotoResult[];
 };
 
 export interface EventResult {
+  id: string;
   name: string;
   location: string;
   date: number;
   imageCount: number;
   thumbnailUrl: string;
   link: string;
-};
-
-export interface PhotoResults {
-  photos: PhotoResult[];
-  totalPages: number;
-  totalRecords: number;
-  currentPage: number;
 };
 
 export interface PhotoResult {

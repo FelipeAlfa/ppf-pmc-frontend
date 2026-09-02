@@ -16,12 +16,12 @@ export const liberationSans = localFont({
     {
       path: "./assets/fonts/LiberationSans-Bold.woff2",
       weight: "700",
-      style: "bold",
+      style: "normal",
     },
     {
       path: "./assets/fonts/LiberationSans-Bold.woff",
       weight: "700",
-      style: "bold",
+      style: "normal",
     },
   ]
 });
@@ -32,15 +32,15 @@ export const helveticaNeue = localFont({
     {
       path: "./assets/fonts/HelveticaNeue-Light.woff2",
       weight: "300",
-      style: "light",
+      style: "normal",
     },
     {
       path: "./assets/fonts/HelveticaNeue-Light.woff",
       weight: "300",
-      style: "light",
+      style: "normal",
     },
     {
-      path: "./assets/fonts/HelveticaNeue-Roman.woff2",
+      path: "./assets/fonts/HelveticaNeue-Roman.woff",
       weight: "400",
       style: "normal",
     },
@@ -52,22 +52,22 @@ export const helveticaNeue = localFont({
     {
       path: "./assets/fonts/HelveticaNeue-Medium.woff2",
       weight: "500",
-      style: "medium",
+      style: "normal",
     },
     {
       path: "./assets/fonts/HelveticaNeue-Medium.woff",
       weight: "500",
-      style: "medium",
+      style: "normal",
     },
     {
       path: "./assets/fonts/HelveticaNeue-Bold.woff2",
       weight: "700",
-      style: "bold",
+      style: "normal",
     },
     {
       path: "./assets/fonts/HelveticaNeue-Bold.woff",
       weight: "700",
-      style: "bold",
+      style: "normal",
     },
   ]
 });

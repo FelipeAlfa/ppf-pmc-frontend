@@ -2,13 +2,8 @@ import type { Metadata } from "next";
 import { helveticaNeue, liberationSans } from "@/fonts";
 import { config as faConfig } from '@fortawesome/fontawesome-svg-core'
 import '@fortawesome/fontawesome-svg-core/styles.css'
-import GlobalHeader from "@/components/partials/GlobalHeader/GlobalHeader";
-import GlobalFooter from "@/components/partials/GlobalFooter/GlobalFooter";
 import { AppProvider } from "@/context/AppContext";
-import Region from "@/components/layout/Region/Region";
-import { RegionsProvider } from "@/context/RegionContext";
-import BaseLayout from "@/components/layout/BaseLayout/BaseLayout";
-import Sticky from "@/components/layout/Sticky/Sticky";
+import { appRegions, RegionsProvider } from "@/context/RegionContext";
 import "@/styles/globals.css";
 
 faConfig.autoAddCss = false
@@ -25,7 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <AppProvider>
-      <RegionsProvider>
+      <RegionsProvider regions={appRegions}>
         <html
           lang="en"
           className={`${liberationSans.variable} ${helveticaNeue.variable}`}
@@ -37,25 +32,7 @@ export default function RootLayout({
               />
             </head>
           <body>
-            <BaseLayout
-              top={
-                <Sticky name="globalHeader" hide>
-                  <Region name="globalHeader">
-                    <GlobalHeader />
-                  </Region>
-                </Sticky>
-              }
-              middle={
-                <Region name="main">
-                  <main>{children}</main>
-                </Region>
-              }
-              bottom={
-                <Region name="globalFooter">
-                  <GlobalFooter />
-                </Region>
-              }
-            />
+            {children}
           </body>
         </html>
       </RegionsProvider>

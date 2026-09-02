@@ -9,15 +9,16 @@ import Link from "next/link";
 import Overlay from "@/components/ui/Overlay/Overlay";
 import { usePathname } from "next/navigation";
 import useBreakpoint from "@/hooks/useBreakpoint";
-import { useRegions } from "@/context/RegionContext";
+import { useRegions, type AppRegion } from "@/context/RegionContext";
 import SocialLinks from "../SocialLinks/SocialLinks";
 import {
   featuresVariants,
   navLinkVariants,
 } from "./GlobalHeader.variants";
+import Button from "@/components/ui/Button/Button";
 
 const breakpointsForMobileMode = ["XS", "SM", "MD", "LG"];
-const regionsToToggle = ["main", "modal", "globalFooter"];
+const regionsToToggle: AppRegion[] = ["mainContent", "mainModal", "globalFooter"];
 
 export default function GlobalHeader() {
   const [mobileMenuIsActive, setMobileMenuIsActive] = useState(false);
@@ -85,13 +86,14 @@ export default function GlobalHeader() {
   );
 
   const navLinkBook = () => (
-    <Link
+    <Button
+      variant="primary"
+      behavior="link"
       target="_self"
       href="/book"
-      onClick={onClickNavLink}
-      className={navLinkVariants({ variant: "book" })}>
+      onClick={onClickNavLink}>
       Book PMC
-    </Link>
+    </Button>
   );
 
   const mobileOptionsARIAProps = isMobileMode
@@ -103,7 +105,7 @@ export default function GlobalHeader() {
     : {};
 
   return (
-    <div className="block h-20 w-full border-b border-[#e8e8e8] bg-white p-4">
+    <div className="relative block h-20 w-full bg-white p-4 after:pointer-events-none after:absolute after:inset-x-0 after:bottom-0 after:h-px after:bg-[#e8e8e8] after:content-['']">
       <div className="block h-full w-full">
         <div className="relative grid h-full w-full grid-cols-[auto_1fr] gap-4 xl:hidden" {...mobileOptionsARIAProps}>
           <div className="h-full">

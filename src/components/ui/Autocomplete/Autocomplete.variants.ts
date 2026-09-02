@@ -5,7 +5,7 @@ export const autocompleteVariants = cva(
   {
     variants: {
       open: {
-        true: "z-10",
+        true: "z-[1]",
       },
     },
   }

@@ -1,3 +1,7 @@
+export const HOMEPAGE_EVENTS_LIMIT = 12;
+export const PHOTO_RESULTS_LIMIT = 64;
+export const EVENT_RESULTS_LIMIT = 64;
+
 export const INTERNAL_LINKS = [
   { label: 'Events', path: '/events' },
   { label: 'Services', path: '/services' },

@@ -2,7 +2,7 @@
 
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useParamState } from "@/context/ParamStateContext";
+import { useSearchParamsState } from "@/context/SearchParamsStateContext";
 import LoadingOverlay from "@/components/ui/LoadingOverlay/LoadingOverlay";
 
 export default function SearchFilterList() {
@@ -10,7 +10,7 @@ export default function SearchFilterList() {
     filters,
     isPending,
     removeParam,
-  } = useParamState();
+  } = useSearchParamsState();
   const visibleFilters = filters.filter((filter) => filter.key !== "p");
 
   if (visibleFilters.length === 0) {

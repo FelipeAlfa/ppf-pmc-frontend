@@ -7,12 +7,12 @@ import ComboBox from "@/components/ui/ComboBox/ComboBox";
 import Container from "@/components/layout/Container/Container";
 import {
   dummyGetAutocompleteResults,
-} from '@/lib/dummy/dummyRequests';
+} from '@/lib/dummy-api/requests';
 import { useRouter } from "next/navigation";
 import {
-  createSearchParamsStateFromParams,
+  SearchParamsState,
   writeSearchParamsState,
-} from "@/lib/searchParams";
+} from "@/lib/searchParamsState";
 
 type SearchType = "photos" | "events";
 
@@ -53,12 +53,10 @@ export default function SearchBar({ initialSearchType = "photos" }: SearchBarPro
     };
   }, [searchValue]);
 
-  const doSearch = useCallback((params: Record<string, string>) => {
+  const doSearch = useCallback((params: Partial<SearchParamsState>) => {
     if (isPending) return;
     const url = searchType === "photos" ? "/photos" : "/events";
-    const searchParams = writeSearchParamsState(
-      createSearchParamsStateFromParams(params)
-    );
+    const searchParams = writeSearchParamsState(params);
     const queryString = searchParams.toString();
     const href = queryString ? `${url}?${queryString}` : url;
 
@@ -79,7 +77,7 @@ export default function SearchBar({ initialSearchType = "photos" }: SearchBarPro
           aria-busy={isPending}
           onSubmit={(event) => {
             event.preventDefault();
-            doSearch({q: searchValue});
+            doSearch({text: searchValue});
           }}>
           <div className="w-full md:w-auto md:grow">
             <Autocomplete
@@ -92,16 +90,16 @@ export default function SearchBar({ initialSearchType = "photos" }: SearchBarPro
                 setSearchValue("");
                 switch (selectedOption.group) {
                   case "People":
-                    doSearch({person: selectedOption.data.id});
+                    doSearch({people: [selectedOption.data.id]});
                     break;
                   case "Events":
-                    doSearch({event: selectedOption.data.id});
+                    doSearch({events: [selectedOption.data.id]});
                     break;
                   case "Locations":
-                    doSearch({location: selectedOption.data.id});
+                    doSearch({locations: [selectedOption.data.id]});
                     break;
                   case "Photographers":
-                    doSearch({photographer: selectedOption.data.id});
+                    doSearch({photographers: [selectedOption.data.id]});
                     break;
                 }
               }} />

@@ -9,6 +9,9 @@
   --loading-bar-line-middle-right: 30%;
   --loading-bar-line-start-right: 100%;
   --loading-bar-line-end-right: -20%;
+  --overlay-animation-duration: 200ms;
+  --modal-window-animation-duration: 200ms;
+  --modal-window-animation-offset: -2rem;
 }
 
 @theme {
@@ -20,6 +23,54 @@
   --animate-hamburger-button-shape-3-active: hamburgerButtonShape3Active var(--hamburger-button-animation-duration) linear 1;
   --animate-loading-bar-left-to-right: loadingBarMoveLeftToRight var(--loading-bar-animation-duration) ease-in-out infinite;
   --animate-loading-bar-right-to-left: loadingBarMoveRightToLeft var(--loading-bar-animation-duration) ease-in-out infinite;
+  --animate-overlay-fade-in: overlayFadeIn var(--overlay-animation-duration) ease-in-out both;
+  --animate-overlay-fade-out: overlayFadeOut var(--overlay-animation-duration) ease-in-out both;
+  --animate-modal-window-enter: modalWindowEnter var(--modal-window-animation-duration) ease-out both;
+  --animate-modal-window-exit: modalWindowExit var(--modal-window-animation-duration) ease-in both;
+}
+
+@keyframes overlayFadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes overlayFadeOut {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes modalWindowEnter {
+  from {
+    opacity: 0;
+    transform: translateY(var(--modal-window-animation-offset));
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes modalWindowExit {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateY(var(--modal-window-animation-offset));
+  }
 }
 
 @keyframes hamburgerButtonShape1 {

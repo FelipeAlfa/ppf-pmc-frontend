@@ -1,7 +1,7 @@
 import { cva } from "class-variance-authority";
 
 export const stickyContentVariants = cva(
-  "z-[100] block w-full flex-none transition-[box-shadow,top] duration-200 ease-in-out data-[sticky-ready=true]:sticky",
+  "z-[10] block w-full flex-none transition-[box-shadow,top] duration-200 ease-in-out data-[sticky-ready=true]:sticky",
   {
     variants: {
       hidden: {

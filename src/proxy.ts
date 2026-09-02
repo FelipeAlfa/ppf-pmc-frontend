@@ -17,24 +17,27 @@ const allowedSearchParamsByPathname: Record<string, Set<string>> = {
     "person",
     "photographer",
   ]),
+  "/events/[id]": new Set([
+    "p",
+  ]),
 };
 
 export function proxy(request: NextRequest) {
-  const allowedSearchParams = allowedSearchParamsByPathname[request.nextUrl.pathname] ?? new Set();
+  // const allowedSearchParams = allowedSearchParamsByPathname[request.nextUrl.pathname] ?? new Set();
 
-  const url = request.nextUrl.clone();
-  let hasUnknownSearchParams = false;
+  // const url = request.nextUrl.clone();
+  // let hasUnknownSearchParams = false;
 
-  Array.from(url.searchParams.keys()).forEach((key) => {
-    if (!allowedSearchParams.has(key)) {
-      url.searchParams.delete(key);
-      hasUnknownSearchParams = true;
-    }
-  });
+  // Array.from(url.searchParams.keys()).forEach((key) => {
+  //   if (!allowedSearchParams.has(key)) {
+  //     url.searchParams.delete(key);
+  //     hasUnknownSearchParams = true;
+  //   }
+  // });
 
-  if (hasUnknownSearchParams) {
-    return NextResponse.redirect(url);
-  }
+  // if (hasUnknownSearchParams) {
+  //   return NextResponse.redirect(url);
+  // }
 
   return NextResponse.next();
 }

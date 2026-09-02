@@ -1,29 +1,35 @@
 "use client";
 
 import { useRegions } from "@/context/RegionContext";
-import { createRef, useEffect } from "react";
+import type { AppRegion } from "@/context/RegionContext";
+import { useCallback, useRef } from "react";
 
 interface RegionProps {
-  name: string;
+  region: AppRegion;
   children?: React.ReactNode;
 }
 
 export default function Region({
-  name,
+  region,
   children
 }: RegionProps) {
   const { add, remove } = useRegions();
-  const htmlElementRef = createRef<HTMLDivElement>();
+  const htmlElementRef = useRef<HTMLDivElement | null>(null);
 
-  useEffect(() => {
+  const setRegionRef = useCallback((element: HTMLDivElement | null) => {
     if (htmlElementRef.current) {
-      add(name, htmlElementRef.current);
-      return () => remove(name);
+      remove(region);
     }
-  }, [name, add, remove, htmlElementRef]);
+
+    htmlElementRef.current = element;
+
+    if (element) {
+      add(region, element);
+    }
+  }, [add, region, remove]);
 
   return (
-    <div data-region={name} ref={htmlElementRef}>
+    <div data-region={region} ref={setRegionRef}>
       {children}
     </div>
   );

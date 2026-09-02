@@ -1,21 +1,43 @@
 "use client";
 
-import { createContext, useContext, useRef } from "react";
+import { createContext, useContext, useRef, useSyncExternalStore } from "react";
+
+export const appRegions = [
+  "globalHeader",
+  "mainContent",
+  "mainModal",
+  "modal",
+  "globalFooter",
+] as const;
+
+export type AppRegion = typeof appRegions[number];
 
 type RegionActions = {
-  add(name: string, ref: HTMLElement): void;
-  remove(name: string): void;
-  get(...regionNames: string[]): RegionRegistry[string][];
+  add(region: AppRegion, ref: HTMLElement): void;
+  remove(region: AppRegion): void;
+  get(...regions: AppRegion[]): RegisteredRegion[];
+  subscribe(listener: () => void): () => void;
 }
 
-type RegionRegistry = {
-  [regionName: string]: {
-    name: string;
-    domElement: HTMLElement;
-  };
+type RegisteredRegion = {
+  region: AppRegion;
+  domElement: HTMLElement;
 };
 
-const RegionsContext = createContext<RegionActions>({} as RegionActions);
+type RegionRegistry = Partial<Record<AppRegion, RegisteredRegion>>;
+
+interface RegionsProviderProps {
+  children: React.ReactNode;
+  regions: readonly AppRegion[];
+}
+
+const RegionsContext = createContext<RegionActions | undefined>(undefined);
+
+function isRegisteredRegion(
+  region: RegionRegistry[AppRegion]
+): region is NonNullable<RegionRegistry[AppRegion]> {
+  return region !== undefined;
+}
 
 export const useRegions = () => {
   const ctx = useContext(RegionsContext);
@@ -23,40 +45,72 @@ export const useRegions = () => {
   return ctx;
 };
 
-export function RegionsProvider({ children }: { children: React.ReactNode }) {
+export function RegionsProvider({
+  children,
+  regions,
+}: RegionsProviderProps) {
   const registry = useRef<RegionRegistry>({});
+  const allowedRegions = useRef(new Set<AppRegion>(regions));
+  const listeners = useRef(new Set<() => void>());
+
+  const notify = () => {
+    listeners.current.forEach((listener) => listener());
+  };
   
-  const add = (name: string, element: HTMLElement
-  ) => {
-    if (registry.current[name]) {
+  const add = (region: AppRegion, element: HTMLElement) => {
+    if (!allowedRegions.current.has(region)) {
+      throw new Error(`Region ${region} is not registered in RegionsProvider.`);
+    }
+
+    if (registry.current[region]) {
       throw new Error(
-        `Region with name ${name} already exists. Please use a different name.`
+        `Region ${region} already exists. Please use a different region.`
       );
     }
 
-    registry.current[name] = {
-      name,
+    registry.current[region] = {
+      region,
       domElement: element,
+    };
+    notify();
+  };
+
+  const remove = (region: AppRegion) => {
+    delete registry.current[region];
+    notify();
+  };
+
+  const get = (...requestedRegions: AppRegion[]) => {
+    if (requestedRegions.length) {
+      return requestedRegions
+        .map((region) => registry.current[region])
+        .filter(isRegisteredRegion);
+    }
+
+    return Object.values(registry.current).filter(isRegisteredRegion);
+  };
+
+  const subscribe = (listener: () => void) => {
+    listeners.current.add(listener);
+
+    return () => {
+      listeners.current.delete(listener);
     };
   };
 
-  const remove = (name: string) => {
-    delete registry.current[name];
-  };
-
-  const get = (...regionNames: string[]) => {
-    if (regionNames.length) {
-      return regionNames
-        .map((name) => registry.current[name])
-        .filter(Boolean);
-    }
-
-    return Object.values(registry.current);
-  };
-
   return (
-    <RegionsContext.Provider value={{ add, remove, get }}>
+    <RegionsContext.Provider value={{ add, remove, get, subscribe }}>
       {children}
     </RegionsContext.Provider>
+  );
+}
+
+export function useRegionElement(region: AppRegion) {
+  const { get, subscribe } = useRegions();
+
+  return useSyncExternalStore(
+    subscribe,
+    () => get(region)[0]?.domElement ?? null,
+    () => null
   );
 }

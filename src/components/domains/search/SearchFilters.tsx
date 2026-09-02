@@ -3,7 +3,7 @@
 import Accordion from "@/components/ui/Accordion/Accordion";
 import Calendar from "@/components/ui/Calendar/Calendar";
 import LoadingOverlay from "@/components/ui/LoadingOverlay/LoadingOverlay";
-import { useParamState } from "@/context/ParamStateContext";
+import { useSearchParamsState } from "@/context/SearchParamsStateContext";
 import { faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useMemo, useState } from "react";
@@ -34,7 +34,7 @@ export default function SearchFilters({
     isPending,
     removeParamValue,
     setParam,
-  } = useParamState();
+  } = useSearchParamsState();
   const accordionItems = useMemo(() => {
     const items: [
       title: string,
