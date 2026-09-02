@@ -39,3 +39,21 @@ export function createDummyRequest<P, D>(
     });
   }
 }
+
+export function dummyImageSrc(width: number, height: number) {
+  return `https://picsum.photos/${width}/${height}`;
+}
+
+export function randomImage(maxSize: number, minSize: number) {
+  const width = randomInteger(minSize, maxSize);
+  const height = randomInteger(minSize, maxSize);
+
+  return `https://picsum.photos/${width}/${height}`;
+}
+
+function randomInteger(min: number, max: number) {
+  const minValue = Math.ceil(min);
+  const maxValue = Math.floor(max);
+
+  return Math.floor(Math.random() * (maxValue - minValue + 1)) + minValue;
+}

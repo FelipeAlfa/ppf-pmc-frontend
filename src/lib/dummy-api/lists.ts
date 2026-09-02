@@ -1,4 +1,4 @@
-import { createDummyList } from "./utils";
+import { createDummyList, dummyImageSrc } from "./utils";
 
 // SLIDESHOW
 
@@ -160,26 +160,17 @@ export const photographersDummyData = createDummyList((_, origin) => origin, [
 
 // PAGE: PUBLISHING
 
-export const publishingDummyData = createDummyList((_, origin) => origin, [
-    {
-        id: "glamor-girls",
-        name: "Glamor Girls",
-        excerpt: "A photographic look at style, nightlife, and familiar faces through the PMC archive.",
-        price: 6500,
-        imageSrc: "/images/book-slide.jpg",
-    },
-    {
-        id: "in-tents",
-        name: "In Tents",
-        excerpt: "A collection shaped by parties, fashion, personalities, and the culture around them.",
-        price: 7500,
-        imageSrc: "/images/book-slide-2.jpg",
-    },
-    {
-        id: "archive-selection",
-        name: "Archive Selection",
-        excerpt: "Limited selections from the Patrick McMullan Company publishing catalog.",
-        price: 5500,
-        imageSrc: "/images/glamor_girls_collage.jpg",
-    },
-]);
+export const publishingDummyData = createDummyList((index, [price, imageSrc]) => {
+    return {
+        id: "id-publishing" + index + 1,
+        name: "Publishing Name " + (index + 1),
+        excerpt: "Publishing Excerpt " + (index + 1) + ": Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+        price,
+        imageSrc,
+    };
+}, [
+    [2500, dummyImageSrc(100, 150)],
+    [7000, dummyImageSrc(150, 100)],
+    [75, dummyImageSrc(130, 130)],
+    [200, dummyImageSrc(130, 150)],
+] as [number, string][]);

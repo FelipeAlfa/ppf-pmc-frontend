@@ -9,6 +9,7 @@ import {
   dummySeachFilterPersonList,
   dummySeachFilterPhotographerList,
   dummySlideList,
+  publishingDummyData,
   servicesDummyData
 } from "./lists";
 import { EVENT_RESULTS_LIMIT, PHOTO_RESULTS_LIMIT } from "@/constants";
@@ -19,6 +20,8 @@ export const dummyGetSlideshow = createDummyRequest(dummySlideList);
 export const dummyGetAutocompleteResults = createDummyRequest(dummyAutocompleteResultList);
 
 export const dummyGetServices = createDummyRequest(servicesDummyData);
+
+export const dummyGetPublishing = createDummyRequest(publishingDummyData);
 
 export const dummyGetEventResults = createDummyRequest(({
   page
