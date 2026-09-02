@@ -1,6 +1,7 @@
 import { createDummyRequest_ } from "./utils_old";
 import { createDummyRequest } from "./utils";
 import {
+  archiveCarouselData,
   dummyAutocompleteResultList,
   dummyEventResultList,
   dummyPhotoResultList,
@@ -22,6 +23,8 @@ export const dummyGetAutocompleteResults = createDummyRequest(dummyAutocompleteR
 export const dummyGetServices = createDummyRequest(servicesDummyData);
 
 export const dummyGetPublishing = createDummyRequest(publishingDummyData);
+
+export const dummyGetArchiveCarousel = createDummyRequest(archiveCarouselData);
 
 export const dummyGetEventResults = createDummyRequest(({
   page

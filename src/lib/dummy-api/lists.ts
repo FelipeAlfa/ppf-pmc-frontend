@@ -117,27 +117,15 @@ export const servicesDummyData = createDummyList((_, origin) => origin, [
 
 // PAGE: ARCHIVE
 
-export const archiveDummyData = createDummyList((_, origin) => origin, [
-    {
-        title: "Archive Image 1",
-        imageSrc: "/images/archive-image-1.jpg",
-    },
-    {
-        title: "Archive Image 2",
-        imageSrc: "/images/archive-image-2.jpg",
-    },
-    {
-        title: "Glamor Girls",
-        imageSrc: "/images/glamor_girls_collage.jpg",
-    },
-    {
-        title: "In Tents",
-        imageSrc: "/images/in_tents_collage.jpg",
-    },
-    {
-        title: "Secrets",
-        imageSrc: "/images/secrets_collage.jpg",
-    },
+export const archiveCarouselData = createDummyList((index, { src }) => {
+    return {
+        name: `Photo Name ${index + 1}`,
+        src
+    };
+}, [
+    { src: dummyImageSrc(400, 300) },
+    { src: dummyImageSrc(400, 300) },
+    { src: dummyImageSrc(300, 400) },
 ]);
 
 export const photographersDummyData = createDummyList((_, origin) => origin, [

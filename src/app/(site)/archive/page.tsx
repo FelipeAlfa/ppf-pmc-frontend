@@ -1,18 +1,17 @@
 import Container from "@/components/layout/Container/Container";
-import GridView from "@/components/layout/GridView/GridView";
 import PageContentText from "@/components/layout/PageContentText/PageContentText";
 import PageHero from "@/components/layout/PageHero/PageHero";
-import { archiveDummyData } from "@/lib/dummy-api/lists";
+import PhotoCarousel from "@/components/layout/PhotoCarousel/PhotoCarousel";
+import { dummyGetArchiveCarousel } from "@/lib/dummy-api/requests";
 import type { Metadata } from "next";
-import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "Archive - Patrick McMullan",
   description: "Explore the Patrick McMullan Company photo archive, a large topical collection of iconic images from the 70s through today.",
 };
 
-export default function ArchivePage() {
-  const archiveItems = archiveDummyData();
+export default async function ArchivePage() {
+  const archiveItems = await dummyGetArchiveCarousel(20);
 
   return (
     <>
@@ -20,40 +19,31 @@ export default function ArchivePage() {
         title="Archive"
         imageSrc="/images/archive-slide.jpg"
         imageAlt="Patrick McMullan Company photo archive" />
-      <Container verticalSpacing>
+      <Container verticalSpacing="large">
         <PageContentText center>
           <p>
             The PMC photo collection and archive is one of the largest topical photo archives of famous and living people in the world.
           </p>
-          <p className="mt-4">
+          <p>
             It is an undiscovered library of iconic images from the 70s until today.
           </p>
         </PageContentText>
-        <div className="mt-12">
-          <GridView
-            items={archiveItems}
-            renderItem={(item) => (
-              <article>
-                <div className="relative aspect-[4/3] overflow-hidden bg-[#eeeeee]">
-                  <Image
-                    className="object-cover"
-                    src={item.imageSrc}
-                    alt={item.title}
-                    fill
-                    sizes="(min-width: 1280px) 25vw, (min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw" />
-                </div>
-                <h2 className="mt-3 text-xs font-bold uppercase tracking-wider">
-                  {item.title}
-                </h2>
-              </article>
-            )} />
-        </div>
-        <p className="mt-12 text-center text-sm leading-6">
-          Interested in PMC Archive images? Contact our Research Department at{" "}
-          <a className="text-brand-blue underline" href="mailto:research@patrickmcmullan.com">
-            research@patrickmcmullan.com
-          </a>
-        </p>
+      </Container>
+      <PhotoCarousel
+        images={archiveItems.map((item) => ({
+          src: item.src,
+          alt: item.name,
+          name: item.name,
+        }))} />
+      <Container verticalSpacing="large">
+        <PageContentText center>
+          <p>
+            Interested in PMC Archive images? Contact our Research Department at{" "}
+            <a className="text-brand-blue underline" href="mailto:research@patrickmcmullan.com">
+              research@patrickmcmullan.com
+            </a>
+          </p>
+        </PageContentText>
       </Container>
     </>
   );
