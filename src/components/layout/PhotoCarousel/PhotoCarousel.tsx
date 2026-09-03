@@ -55,20 +55,20 @@ export default function PhotoCarousel({
   }
 
   return (
-    <div className="relative h-72 w-full min-w-0 md:h-96">
-      <div className="h-full overflow-hidden" ref={emblaRef}>
-        <ul className="flex h-full touch-pan-y">
+    <div className="relative h-72 w-full min-w-0 bg-black md:h-96">
+      <div className="h-full overflow-hidden bg-black" ref={emblaRef}>
+        <ul className="group/carousel flex h-full touch-pan-y bg-black">
           {images.map((image, index) => (
             <li
               key={`${image.src}-${index}`}
-              className="h-full min-w-0 flex-[0_0_auto]">
-              <div className="group relative flex h-full items-center justify-center overflow-hidden bg-[#eeeeee]">
+              className="group/item h-full min-w-0 flex-[0_0_auto]">
+              <div className="relative flex h-full items-center justify-center overflow-hidden bg-black">
                 <img
-                  className="block h-full w-auto max-w-none object-contain transition-opacity duration-150 ease-linear hover:opacity-80"
+                  className="block h-full w-auto max-w-none object-contain transition-[filter,opacity] duration-200 ease-linear group-hover/carousel:brightness-40 group-hover/item:brightness-100"
                   src={image.src}
                   alt={image.alt}
                   onLoad={updateCarouselLayout} />
-                <div className="pointer-events-none absolute inset-0 flex items-end bg-black/45 p-4 opacity-0 transition-opacity duration-150 ease-linear group-hover:opacity-100 group-focus-within:opacity-100">
+                <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent px-4 py-5 opacity-0 transition-opacity duration-200 ease-linear group-hover/item:opacity-100 group-focus-within/item:opacity-100">
                   <p className="font-helvetica-neue-system text-xs font-light uppercase tracking-[2px] text-white">
                     {image.name}
                   </p>
