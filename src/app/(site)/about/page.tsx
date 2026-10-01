@@ -1,5 +1,5 @@
+import AboutBiography from "@/components/domains/about/AboutBiography";
 import Container from "@/components/layout/Container/Container";
-import GridView from "@/components/layout/GridView/GridView";
 import PageHero from "@/components/layout/PageHero/PageHero";
 import { photographersDummyData } from "@/lib/dummy-api/lists";
 import type { Metadata } from "next";
@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 };
 
 export default function AboutPage() {
-  const [mainPhotographer, ...photographers] = photographersDummyData();
+  const [mainPhotographer] = photographersDummyData();
 
   return (
     <>
@@ -25,57 +25,24 @@ export default function AboutPage() {
           New York, NY 10014
         </address>
       </PageHero>
-      <Container verticalSpacing>
-        <section className="grid gap-8 bg-[#eeeeee] p-4 md:grid-cols-[minmax(0,24rem)_1fr] md:p-8">
-          <div className="relative aspect-[4/5] overflow-hidden bg-white">
+      <Container verticalSpacing="large">
+        <section className="overflow-hidden">
+          <div className="mb-6 w-full overflow-hidden border-4 border-brand-blue bg-white md:float-left md:mr-8 md:mb-4 md:w-96">
             <Image
-              className="object-cover"
+              className="h-auto w-full"
               src={mainPhotographer.imageSrc}
               alt={mainPhotographer.name}
-              fill
+              width={1000}
+              height={1500}
               sizes="(min-width: 768px) 24rem, 100vw" />
           </div>
-          <div className="flex flex-col justify-center">
-            <p className="text-xs font-bold uppercase tracking-wider text-brand-blue">
-              {mainPhotographer.role}
-            </p>
-            <h2 className="mt-2 text-2xl font-bold uppercase tracking-wider">
-              {mainPhotographer.name}
-            </h2>
-            <div className="mt-6 space-y-4 text-sm leading-7 md:text-base">
-              <p>
-                Patrick McMullan Company has chronicled New York culture, nightlife, fashion, art, and philanthropy for decades.
-              </p>
-              <p>
-                This modern rebuild keeps the editorial spirit of the original site while giving us a cleaner component system for search, galleries, publishing, and events.
-              </p>
-            </div>
-          </div>
-        </section>
-        <section className="mt-12">
-          <h2 className="mb-6 text-center text-2xl font-bold uppercase tracking-wider">
-            <span className="text-brand-blue">PMC</span> Photographers
+          <p className="text-xs font-bold uppercase tracking-wider text-brand-blue">
+            {mainPhotographer.role}
+          </p>
+          <h2 className="mt-2 text-2xl font-bold uppercase tracking-wider">
+            {mainPhotographer.name}
           </h2>
-          <GridView
-            items={photographers}
-            renderItem={(photographer) => (
-              <article className="text-center">
-                <div className="relative mx-auto aspect-square max-w-60 overflow-hidden rounded-full bg-[#eeeeee]">
-                  <Image
-                    className="object-cover"
-                    src={photographer.imageSrc}
-                    alt={photographer.name}
-                    fill
-                    sizes="15rem" />
-                </div>
-                <h3 className="mt-4 text-sm font-bold uppercase tracking-wider">
-                  {photographer.name}
-                </h3>
-                <p className="mt-1 text-xs uppercase tracking-wider text-brand-blue">
-                  {photographer.role}
-                </p>
-              </article>
-            )} />
+          <AboutBiography />
         </section>
       </Container>
     </>

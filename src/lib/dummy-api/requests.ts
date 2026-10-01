@@ -1,4 +1,3 @@
-import { createDummyRequest_ } from "./utils_old";
 import { createDummyRequest } from "./utils";
 import {
   archiveCarouselData,
@@ -80,7 +79,7 @@ export const dummyGetFilters = createDummyRequest(({
   };
 });
 
-export const dummyGetEventInfo = createDummyRequest_(({ id }) => {
+export const dummyGetEventInfo = createDummyRequest(({ id }: { id?: string } = {}) => {
   if (!id) return null;
 
   const [, , count] = String(id).split("-");

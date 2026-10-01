@@ -11,30 +11,14 @@ export type EventResponse = PmcLegacyResponse<{
 }>;
 
 export function searchEvents(params: EventSearchParams = {}) {
-  return pmcRequest<EventsResponse>("/events/search.json", {
+  return pmcRequest<EventsResponse>("/events", {
     method: "GET",
     params,
     auth: "none",
   });
 }
 
-export function listEvents(params: PmcRequestParams = {}) {
-  return pmcRequest<EventsResponse>("/events/list.json", {
-    method: "GET",
-    params,
-    auth: "none",
-  });
-}
-
-export function getEvent(id: string | number) {
-  return pmcRequest<EventResponse>("/events/info.json", {
-    method: "GET",
-    params: { id },
-    auth: "none",
-  });
-}
-
-export function findEventBySlugOrId(slugOrId: string | number) {
+export function getEventBySlugOrId(slugOrId: string | number) {
   return pmcRequest<EventResponse>("/events/find_by_slug_or_id.json", {
     method: "GET",
     params: { slug_or_id: slugOrId },
